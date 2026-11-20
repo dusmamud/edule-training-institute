@@ -102,7 +102,7 @@
 				</div>
 				<div>
 					<label class="block text-sm font-bold" for="phone">WhatsApp number</label>
-					<input id="phone" type="tel" bind:value={phone} required pattern="[0-9+\- ]{10,15}" autocomplete="tel" placeholder="e.g. 98765 43210" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+					<input id="phone" type="tel" bind:value={phone} required pattern={'[0-9+\\- ]{10,15}'} autocomplete="tel" placeholder="e.g. 98765 43210" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 				</div>
 			</div>
 			<div class="mt-4">
