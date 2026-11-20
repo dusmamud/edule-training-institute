@@ -2,13 +2,15 @@
 	import { Award, GraduationCap, MapPin, Users } from '@lucide/svelte';
 	import Picture from '#lib/components/Picture.svelte';
 	import PageHero from '#lib/components/PageHero.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 	import { site } from '#lib/data/site.ts';
 </script>
 
-<svelte:head>
-	<title>About EduLe — Computer Training Institute in Pune</title>
-	<meta name="description" content="EduLe is a computer training institute in Pune. Since 2016 we have trained 28,400+ students in development, data, design, accounting and business — with certificates and placement support." />
-</svelte:head>
+<Seo
+	title="About EduLe — Computer Training Institute in Pune"
+	description="EduLe is a computer training institute in Pune. Since 2016 we have trained 28,400+ students in development, data, design, accounting and business — with certificates and placement support."
+	image="lab-students"
+/>
 
 <PageHero eyebrow="About EduLe" title="Practical computer education, since 2016" text="We started with one classroom in Pune and a simple idea: teach the skills employers actually ask for, with real projects and honest fees." />
 
@@ -18,7 +20,7 @@
 		<div>
 			<h2 class="font-display text-2xl font-extrabold sm:text-3xl">Our story</h2>
 			<p class="mt-4 leading-relaxed text-muted">EduLe began in 2016 when our founder — then a software trainer — kept meeting bright graduates who could pass exams but could not do the job. We built the institute we wished existed: small batches, working professionals as faculty, and every course ending in something a student can show an employer.</p>
-			<p class="mt-3 leading-relaxed text-muted">Today we run classroom batches in Pune and live online batches across India, with 42 instructors and 1,235 courses on our catalogue — from a 4-week budgeting course to a 16-week full-stack programme.</p>
+			<p class="mt-3 leading-relaxed text-muted">Today we run classroom batches in Pune and live online batches across India, with 6 expert instructors and 13 job-ready courses on our catalogue — from a 4-week budgeting course to a 16-week full-stack programme.</p>
 			<dl class="mt-6 grid grid-cols-3 gap-4 text-center">
 				<div class="rounded-2xl bg-mint p-4"><dt class="sr-only">Students trained</dt><dd class="font-display text-2xl font-extrabold text-leaf-dark">{site.stats.students.toLocaleString('en-IN')}+</dd><dd class="text-xs font-semibold text-muted">students trained</dd></div>
 				<div class="rounded-2xl bg-mint p-4"><dt class="sr-only">Placed</dt><dd class="font-display text-2xl font-extrabold text-leaf-dark">{site.stats.placed.toLocaleString('en-IN')}+</dd><dd class="text-xs font-semibold text-muted">placed in jobs</dd></div>

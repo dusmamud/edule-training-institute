@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { ArrowRight, CheckCircle2 } from '@lucide/svelte';
 	import PageHero from '#lib/components/PageHero.svelte';
-	import { browser } from '$app/environment';
+	import Seo from '#lib/components/Seo.svelte';
+	import { browser } from '$app/env';
 	import { batches, courses, inr } from '#lib/data/site.ts';
 
 	let step = $state(1);
@@ -33,10 +34,11 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Admissions &amp; Enrolment — EduLe</title>
-	<meta name="description" content="Enrol at EduLe in three steps: choose your course, pick a batch, confirm your details. Fees in ₹ with instalment options." />
-</svelte:head>
+<Seo
+	title="Admissions & Enrolment — EduLe"
+	description="Enrol at EduLe in three steps: choose your course, pick a batch, confirm your details. Fees in ₹ with instalment options."
+	image="classroom"
+/>
 
 <PageHero eyebrow="Admissions" title="Enrol in three simple steps" text="Choose a course, pick a batch that fits your day, and confirm your details. Our team calls you within one working day to complete enrolment." />
 
@@ -71,8 +73,12 @@
 		<form class="mt-8 rounded-2xl border border-line bg-white p-6 sm:p-8" onsubmit={next}>
 			<h2 class="font-display text-xl font-extrabold">Step 2 — Pick your batch</h2>
 			<p class="mt-2 text-sm text-muted">Course: <strong class="text-ink">{course.title}</strong></p>
-			<fieldset class="mt-5 space-y-3">
+			<fieldset class="mt-5 min-w-0 space-y-3">
 				<legend class="sr-only">Batch</legend>
+				<label class="flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 {batch === course.nextBatch.date ? 'border-leaf bg-mint' : 'border-line'}">
+					<input type="radio" name="batch" value={course.nextBatch.date} bind:group={batch} class="h-5 w-5 accent-[#16a34a]" />
+					<span class="flex-1"><strong>Next batch — {course.nextBatch.date}</strong><span class="block text-sm text-muted">{course.nextBatch.time} · {course.nextBatch.days} · {course.nextBatch.mode} · {course.nextBatch.seats} seats left</span></span>
+				</label>
 				{#each batches as b}
 					<label class="flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 {batch === b.name ? 'border-leaf bg-mint' : 'border-line'}">
 						<input type="radio" name="batch" value={b.name} bind:group={batch} class="h-5 w-5 accent-[#16a34a]" />

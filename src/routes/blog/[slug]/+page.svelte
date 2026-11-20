@@ -1,19 +1,39 @@
 <script lang="ts">
 	import Picture from '#lib/components/Picture.svelte';
-	import { blogPosts } from '#lib/data/site.ts';
+	import Seo from '#lib/components/Seo.svelte';
+	import { blogPosts, site } from '#lib/data/site.ts';
 
 	let { data } = $props();
 	const post = $derived(data.post);
 	const others = blogPosts.filter((b) => b.slug !== post.slug);
+
+	const articleJsonLd = $derived({
+		'@context': 'https://schema.org',
+		'@type': 'Article',
+		headline: post.title,
+		description: post.excerpt,
+		image: `${site.url}/images/${post.image}-1200.jpg`,
+		author: { '@type': 'Person', name: post.author },
+		publisher: { '@type': 'EducationalOrganization', name: 'EduLe Computer Training Institute', url: site.url },
+		datePublished: '2026-11-12'
+	});
 </script>
 
+<Seo
+	title="{post.title} — EduLe Blog"
+	description={post.excerpt}
+	image={post.image}
+	type="article"
+/>
+
 <svelte:head>
-	<title>{post.title} — EduLe Blog</title>
-	<meta name="description" content={post.excerpt} />
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html `<script type="application/ld+json">${JSON.stringify(articleJsonLd)}</script>`}
 </svelte:head>
 
 <article class="mx-auto max-w-3xl px-4 py-10 sm:py-14">
 	<p class="text-sm font-bold tracking-wide text-leaf-dark uppercase">{post.category} · {post.date} · {post.read}</p>
+	<p class="mt-1 text-sm text-muted">By {post.author}, EduLe faculty</p>
 	<h1 class="mt-3 font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">{post.title}</h1>
 	<Picture name={post.image} alt={post.title} width={1200} height={700} eager={true} sizes="(max-width: 768px) 100vw, 768px" imgClass="mt-6 aspect-[12/7] w-full rounded-2xl object-cover" />
 	{#each post.body as para}

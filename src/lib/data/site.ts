@@ -10,9 +10,10 @@ export const site = {
 	name: 'EduLe',
 	tagline: 'Computer Training Institute',
 	url: 'https://edule-training-institute.pages.dev',
-	phoneDisplay: '(970) 262-1413',
+	phoneDisplay: '+91 97026 21413',
 	phoneHref: 'tel:+919702621413',
 	email: 'hello@edule.in',
+	linkedin: 'https://www.linkedin.com/company/edule-in',
 	address: '2nd Floor, Sunrise Plaza, MG Road, Pune, Maharashtra 411001',
 	hours: 'Mon–Sat, 9:00 am – 7:00 pm IST',
 	whatsappHref: 'https://wa.me/919702621413',
@@ -20,7 +21,7 @@ export const site = {
 	facebook: 'https://www.facebook.com/edule.in',
 	twitter: 'https://x.com/edule_in',
 	youtube: 'https://www.youtube.com/@edule-in',
-	stats: { courses: 1235, students: 28400, rating: 4.8, ratingCount: '9.8K', instructors: 42, placed: 18200 }
+	stats: { courses: 13, students: 28400, rating: 4.8, ratingCount: '9.8K', instructors: 6, placed: 18200 }
 };
 
 export type Course = {
@@ -43,6 +44,10 @@ export type Course = {
 	short: string;
 	learn: string[];
 	curriculum: { title: string; lessons: string[] }[];
+	tools: string[];
+	jobs: string[];
+	reviews: { name: string; text: string; rating: number }[];
+	nextBatch: { date: string; days: string; time: string; mode: string; seats: number };
 	certificate: boolean;
 	mode: string;
 };
@@ -59,8 +64,8 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-rahul',
 		image: 'course-data-science',
 		imageAlt: 'Data analyst working with colourful charts and dashboards on dual monitors',
-		duration: '08 hr 15 mins',
-		lectures: 29,
+		duration: '42 hr 30 mins',
+		lectures: 42,
 		weeks: 12,
 		price: 32500,
 		oldPrice: 38500,
@@ -74,6 +79,11 @@ export const courses: Course[] = [
 			{ title: 'Visualisation & EDA', lessons: ['Matplotlib & Seaborn deep dive', 'Exploratory analysis on Indian datasets', 'Dashboards with Plotly'] },
 			{ title: 'Machine Learning', lessons: ['Regression & classification', 'Clustering & model evaluation', 'Capstone: house-price prediction'] }
 		],
+
+		tools: ['Python', 'pandas', 'NumPy', 'scikit-learn', 'Matplotlib', 'Jupyter'],
+		jobs: ['Data Analyst', 'Junior ML Engineer', 'Business Analyst'],
+		reviews: [{ name: 'Ananya Deshmukh', text: 'Went from zero Python to a working ML model in 12 weeks. The capstone project got me my first interview.', rating: 5 }, { name: 'Karan Joshi', text: 'Best part is the hands-on datasets — real Indian data, not toy examples.', rating: 5 }],
+		nextBatch: { date: 'Mon, 23 Nov 2026', days: 'Mon–Fri', time: '9:00 – 11:00 am', mode: 'Classroom, Pune', seats: 6 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -86,12 +96,12 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-sana',
 		image: 'course-uiux',
 		imageAlt: 'Designer sketching mobile app wireframes and colour swatches on a desk',
-		duration: '08 hr 15 mins',
-		lectures: 29,
+		duration: '28 hr 15 mins',
+		lectures: 36,
 		weeks: 8,
 		price: 34000,
-		oldPrice: null,
-		rating: 4.9,
+		oldPrice: 42500,
+		rating: 4.8,
 		students: 1980,
 		badge: null,
 		short: 'Colour theory, palettes and accessible UI — design interfaces that feel right and read clearly.',
@@ -101,6 +111,11 @@ export const courses: Course[] = [
 			{ title: 'Colour in Figma', lessons: ['Styles, variables & tokens', 'Dark mode & theming', 'Handoff to developers'] },
 			{ title: 'Portfolio Project', lessons: ['Audit an existing app', 'Redesign with a new scheme', 'Present & critique'] }
 		],
+
+		tools: ['Figma', 'Adobe Color', 'Coolors', 'Stark'],
+		jobs: ['UI Designer', 'Visual Designer', 'Design Associate'],
+		reviews: [{ name: 'Kavya Reddy', text: 'I finally understand why some palettes feel right. My Figma files look professional now.', rating: 5 }, { name: 'Nikhil Rao', text: 'Short, practical and fun. The accessibility module alone was worth the fee.', rating: 4 }],
+		nextBatch: { date: 'Mon, 23 Nov 2026', days: 'Mon–Fri', time: '6:30 – 8:30 pm', mode: 'Classroom + Live Online', seats: 4 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -113,12 +128,12 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-arjun',
 		image: 'instructor-teaching',
 		imageAlt: 'Instructor explaining a business strategy on a large screen to adult students',
-		duration: '08 hr 15 mins',
-		lectures: 29,
+		duration: '18 hr 45 mins',
+		lectures: 24,
 		weeks: 6,
 		price: 24500,
 		oldPrice: 28900,
-		rating: 4.9,
+		rating: 4.7,
 		students: 1540,
 		badge: null,
 		short: 'Lead teams, shape culture and make decisions — practical leadership for growing Indian businesses.',
@@ -128,6 +143,11 @@ export const courses: Course[] = [
 			{ title: 'Culture & Communication', lessons: ['Values into everyday habits', 'Meetings that respect time', 'Handling conflict'] },
 			{ title: 'Your Plan', lessons: ['Diagnose your team', 'Draft a 90-day plan', 'Peer review & feedback'] }
 		],
+
+		tools: ['Notion', 'Miro', 'Google Workspace'],
+		jobs: ['Team Lead', 'Operations Manager', 'Store Manager'],
+		reviews: [{ name: 'Sana Sheikh', text: 'The 90-day leadership plan helped me restructure my small team within a month.', rating: 5 }, { name: 'Vivek Nair', text: 'Practical, no jargon. Every session ended with something I used at work the next day.', rating: 4 }],
+		nextBatch: { date: 'Sat, 28 Nov 2026', days: 'Sat–Sun', time: '10:00 am – 1:00 pm', mode: 'Live Online', seats: 8 },
 		certificate: true,
 		mode: 'Live Online'
 	},
@@ -140,12 +160,12 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-arjun',
 		image: 'course-finance',
 		imageAlt: 'Woman calculating a household budget with a calculator, notebook and laptop',
-		duration: '08 hr 15 mins',
-		lectures: 29,
+		duration: '12 hr 30 mins',
+		lectures: 18,
 		weeks: 4,
 		price: 0,
 		oldPrice: 9999,
-		rating: 4.9,
+		rating: 4.8,
 		students: 5210,
 		badge: 'Free',
 		short: 'Budgeting, saving and net-worth tracking for real Indian households — free, practical, no jargon.',
@@ -155,6 +175,11 @@ export const courses: Course[] = [
 			{ title: 'Budgeting in Practice', lessons: ['A family budget template', 'Festival & wedding planning', 'Reviewing month-end'] },
 			{ title: 'Net Worth & Goals', lessons: ['Assets vs liabilities', 'Your net-worth sheet', 'A one-year money plan'] }
 		],
+
+		tools: ['Google Sheets', 'Excel', 'UPI & banking apps'],
+		jobs: ['Accounts Assistant', 'Banking Associate', 'Back-office Executive'],
+		reviews: [{ name: 'Pooja Sharma', text: 'Free, and genuinely useful. My family budget finally makes sense.', rating: 5 }, { name: 'Rahul Verma', text: 'Explained net worth and EMIs in plain language. Wish I had done this years ago.', rating: 5 }],
+		nextBatch: { date: 'Mon, 30 Nov 2026', days: 'Mon–Fri', time: '2:00 – 4:00 pm', mode: 'Self-paced + Live Q&A', seats: 12 },
 		certificate: true,
 		mode: 'Self-paced + Live Q&A'
 	},
@@ -163,16 +188,16 @@ export const courses: Course[] = [
 		title: 'Build Brand Into Marketing: Tackling the New Marketing Landscape',
 		category: 'Business',
 		level: 'Intermediate',
-		instructor: 'Meera Iyer',
-		instructorImage: 'instructor-meera',
+		instructor: 'Priya Nair',
+		instructorImage: null,
 		image: 'course-digital-marketing',
 		imageAlt: 'Professional planning a social media marketing campaign on phone and laptop',
-		duration: '08 hr 15 mins',
-		lectures: 29,
+		duration: '26 hr 00 mins',
+		lectures: 32,
 		weeks: 8,
 		price: 11500,
-		oldPrice: null,
-		rating: 4.9,
+		oldPrice: 14999,
+		rating: 4.8,
 		students: 2760,
 		badge: null,
 		short: 'Brand strategy, content and campaigns — market a business without a big-city budget.',
@@ -182,6 +207,11 @@ export const courses: Course[] = [
 			{ title: 'Campaigns', lessons: ['A 30-day content plan', 'WhatsApp Business & reels', 'Local SEO & Google Business'] },
 			{ title: 'Measure & Improve', lessons: ['Analytics without overwhelm', 'A/B testing on a budget', 'Capstone campaign review'] }
 		],
+
+		tools: ['Canva', 'Meta Business Suite', 'WhatsApp Business', 'Google Analytics'],
+		jobs: ['Digital Marketing Executive', 'Social Media Manager'],
+		reviews: [{ name: 'Sneha Kulkarni', text: 'The 30-day content plan doubled our shop’s Instagram enquiries.', rating: 5 }, { name: 'Amit Patel', text: 'Great for small businesses — every example used budgets we actually have.', rating: 4 }],
+		nextBatch: { date: 'Mon, 30 Nov 2026', days: 'Mon–Fri', time: '6:30 – 8:30 pm', mode: 'Classroom + Live Online', seats: 5 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -194,11 +224,11 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-sana',
 		image: 'course-graphic-design',
 		imageAlt: 'Graphic designer creating colourful geometric badge artwork on a graphics tablet',
-		duration: '08 hr 15 mins',
-		lectures: 29,
+		duration: '22 hr 10 mins',
+		lectures: 28,
 		weeks: 6,
 		price: 19500,
-		oldPrice: null,
+		oldPrice: 24999,
 		rating: 4.9,
 		students: 1890,
 		badge: null,
@@ -209,6 +239,11 @@ export const courses: Course[] = [
 			{ title: 'Badge & Icon Sets', lessons: ['Design a badge series', 'A consistent icon family', 'Monograms & marks'] },
 			{ title: 'Portfolio', lessons: ['A brand kit for a local business', 'Mockups & presentation', 'Client-ready exports'] }
 		],
+
+		tools: ['Illustrator', 'Figma', 'Procreate'],
+		jobs: ['Graphic Designer', 'Freelance Illustrator', 'Brand Designer'],
+		reviews: [{ name: 'Kavya Reddy', text: 'Geometric construction finally clicked. My badge set got me freelance work.', rating: 5 }, { name: 'Divya Menon', text: 'Clear steps, good feedback on the portfolio project.', rating: 5 }],
+		nextBatch: { date: 'Sat, 28 Nov 2026', days: 'Sat–Sun', time: '10:00 am – 1:00 pm', mode: 'Classroom, Pune', seats: 7 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -221,7 +256,7 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-meera',
 		image: 'course-web-dev',
 		imageAlt: 'Developer writing website code on a laptop showing a colourful webpage',
-		duration: '12 hr 40 mins',
+		duration: '56 hr 20 mins',
 		lectures: 48,
 		weeks: 16,
 		price: 24999,
@@ -236,6 +271,11 @@ export const courses: Course[] = [
 			{ title: 'JavaScript', lessons: ['Variables, functions & events', 'Fetching data from APIs', 'A working app, start to finish'] },
 			{ title: 'Ship It', lessons: ['Git & GitHub', 'Hosting & domains', 'Capstone: your portfolio site'] }
 		],
+
+		tools: ['HTML', 'CSS', 'JavaScript', 'Git', 'GitHub', 'Netlify'],
+		jobs: ['Frontend Developer', 'Web Developer', 'Junior Full-Stack Developer'],
+		reviews: [{ name: 'Amit Verma', text: 'Evening batch fit around my shop job. I now build websites for local businesses.', rating: 5 }, { name: 'Rohan Gupta', text: 'From a blank page to a live site in 16 weeks. The Git and deployment module is gold.', rating: 5 }],
+		nextBatch: { date: 'Mon, 23 Nov 2026', days: 'Mon–Fri', time: '9:00 – 11:00 am', mode: 'Classroom, Pune', seats: 3 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -248,12 +288,12 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-meera',
 		image: 'course-python',
 		imageAlt: 'Hands typing Python code on a laptop with a colourful code editor',
-		duration: '10 hr 05 mins',
+		duration: '38 hr 40 mins',
 		lectures: 36,
 		weeks: 10,
 		price: 14999,
 		oldPrice: 19999,
-		rating: 4.9,
+		rating: 4.8,
 		students: 3680,
 		badge: null,
 		short: 'The first programming course that sticks — Python basics, then automation scripts you actually use.',
@@ -263,6 +303,11 @@ export const courses: Course[] = [
 			{ title: 'Practical Python', lessons: ['Files & spreadsheets', 'Web scraping basics', 'Automate a boring task'] },
 			{ title: 'Projects', lessons: ['Expense tracker CLI', 'WhatsApp reminder bot (mock)', 'Final project & review'] }
 		],
+
+		tools: ['Python', 'VS Code', 'Git', 'REST APIs'],
+		jobs: ['Python Developer', 'Automation Executive', 'Data Analyst (Entry)'],
+		reviews: [{ name: 'Ananya Deshmukh', text: 'The automation scripts I built in week 6 still save me hours every week.', rating: 5 }, { name: 'Sanjay Iyer', text: 'Patient teaching, lots of practice. Perfect first programming course.', rating: 5 }],
+		nextBatch: { date: 'Mon, 30 Nov 2026', days: 'Mon–Fri', time: '6:30 – 8:30 pm', mode: 'Classroom + Live Online', seats: 6 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -271,16 +316,16 @@ export const courses: Course[] = [
 		title: 'Cyber Security Fundamentals & Ethical Hacking Basics',
 		category: 'Development',
 		level: 'Intermediate',
-		instructor: 'Rahul Sharma',
-		instructorImage: 'instructor-rahul',
+		instructor: 'Vikram Singh',
+		instructorImage: 'instructor-vikram',
 		image: 'course-cyber-security',
 		imageAlt: 'IT professional monitoring a security dashboard with shield graphics on monitors',
-		duration: '09 hr 30 mins',
+		duration: '36 hr 15 mins',
 		lectures: 32,
 		weeks: 10,
 		price: 21999,
 		oldPrice: 27999,
-		rating: 4.9,
+		rating: 4.8,
 		students: 2140,
 		badge: 'New',
 		short: 'Networks, threats and defence — the security foundations every IT job now expects.',
@@ -290,6 +335,11 @@ export const courses: Course[] = [
 			{ title: 'Attack & Defence', lessons: ['Phishing & social engineering', 'Web vulnerabilities', 'Hardening a system'] },
 			{ title: 'Capstone', lessons: ['Audit a demo site (authorised lab)', 'Write a findings report', 'Career paths in security'] }
 		],
+
+		tools: ['Linux', 'Wireshark', 'Nmap', 'Burp Suite'],
+		jobs: ['SOC Analyst', 'Security Associate', 'IT Support Executive'],
+		reviews: [{ name: 'Imran Shaikh', text: 'The security lab is the real deal — I audited a demo site end to end.', rating: 5 }, { name: 'Neha Kapoor', text: 'Made networking and threats easy to follow, even with no IT background.', rating: 4 }],
+		nextBatch: { date: 'Sat, 5 Dec 2026', days: 'Sat–Sun', time: '10:00 am – 1:00 pm', mode: 'Classroom + Live Online', seats: 5 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -302,7 +352,7 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-arjun',
 		image: 'course-excel',
 		imageAlt: 'Office worker building a colourful spreadsheet with charts on a laptop',
-		duration: '06 hr 45 mins',
+		duration: '20 hr 05 mins',
 		lectures: 24,
 		weeks: 5,
 		price: 6999,
@@ -317,6 +367,11 @@ export const courses: Course[] = [
 			{ title: 'Analyse & Present', lessons: ['PivotTables & slicers', 'Charts that tell the truth', 'A management dashboard'] },
 			{ title: 'Workplace Practice', lessons: ['Payroll & invoice templates', 'Data cleaning drills', 'Final assessment'] }
 		],
+
+		tools: ['Excel', 'Power Query', 'Power BI'],
+		jobs: ['MIS Executive', 'Data Entry Executive', 'Back-office Analyst'],
+		reviews: [{ name: 'Rohit Patil', text: 'PivotTables and dashboards got me noticed at work within weeks.', rating: 5 }, { name: 'Meera Joshi', text: 'Every lesson used real office data. I use these sheets daily.', rating: 5 }],
+		nextBatch: { date: 'Mon, 23 Nov 2026', days: 'Mon–Fri', time: '2:00 – 4:00 pm', mode: 'Classroom, Pune', seats: 9 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -329,7 +384,7 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-arjun',
 		image: 'course-tally',
 		imageAlt: 'Accountant at a desk with ledger books, calculator and laptop showing accounting software',
-		duration: '09 hr 00 mins',
+		duration: '30 hr 00 mins',
 		lectures: 30,
 		weeks: 8,
 		price: 8499,
@@ -344,6 +399,11 @@ export const courses: Course[] = [
 			{ title: 'GST in Tally', lessons: ['GST setup & rates', 'GSTR-1 & GSTR-3B', 'E-invoicing & e-way bills'] },
 			{ title: 'Real Practice', lessons: ['A full month in a mock firm', 'Payroll & TDS intro', 'Final assessment & certificate'] }
 		],
+
+		tools: ['Tally Prime', 'GST Portal', 'Excel'],
+		jobs: ['Accounts Executive', 'GST Assistant', 'Billing Executive'],
+		reviews: [{ name: 'Rohit Patil', text: 'Filed my first GSTR-3B in the mock company before I ever touched a real one.', rating: 5 }, { name: 'Sunita Agarwal', text: 'Payroll and inventory modules are exactly what our CA firm uses.', rating: 5 }],
+		nextBatch: { date: 'Mon, 30 Nov 2026', days: 'Mon–Fri', time: '9:00 – 11:00 am', mode: 'Classroom, Pune', seats: 4 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -356,12 +416,12 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-meera',
 		image: 'course-ai',
 		imageAlt: 'Student exploring AI and machine learning visuals on a laptop screen',
-		duration: '11 hr 20 mins',
+		duration: '44 hr 50 mins',
 		lectures: 40,
 		weeks: 12,
 		price: 29999,
 		oldPrice: 36999,
-		rating: 4.9,
+		rating: 4.8,
 		students: 2870,
 		badge: 'New',
 		short: 'What AI can and cannot do — prompts, models and ML basics, taught without the hype.',
@@ -371,6 +431,11 @@ export const courses: Course[] = [
 			{ title: 'Working with AI', lessons: ['Prompting that works', 'AI for docs, sheets & code', 'Spotting AI mistakes'] },
 			{ title: 'Build & Ship', lessons: ['A chatbot with an API', 'Evaluate & improve it', 'Capstone demo day'] }
 		],
+
+		tools: ['ChatGPT', 'Python', 'Hugging Face', 'Streamlit'],
+		jobs: ['AI Support Executive', 'Junior ML Engineer', 'Prompt Engineer (Entry)'],
+		reviews: [{ name: 'Karan Joshi', text: 'No hype, just what AI can and cannot do — and how to use it at work.', rating: 5 }, { name: 'Priya Desai', text: 'Built a working chatbot in the capstone. My manager was impressed.', rating: 4 }],
+		nextBatch: { date: 'Mon, 7 Dec 2026', days: 'Mon–Fri', time: '6:30 – 8:30 pm', mode: 'Live Online', seats: 7 },
 		certificate: true,
 		mode: 'Classroom + Live Online'
 	},
@@ -383,12 +448,12 @@ export const courses: Course[] = [
 		instructorImage: 'instructor-rahul',
 		image: 'course-cloud',
 		imageAlt: 'Cloud engineer working with server and cloud network diagrams on a laptop',
-		duration: '10 hr 30 mins',
+		duration: '34 hr 25 mins',
 		lectures: 34,
 		weeks: 10,
 		price: 18999,
 		oldPrice: 24999,
-		rating: 4.9,
+		rating: 4.7,
 		students: 1730,
 		badge: null,
 		short: 'EC2, S3, databases and deployment — run real workloads on AWS with confidence.',
@@ -398,18 +463,23 @@ export const courses: Course[] = [
 			{ title: 'Core Services', lessons: ['S3 storage & hosting', 'Databases on RDS', 'Networking & VPC basics'] },
 			{ title: 'Deploy', lessons: ['A full app on AWS', 'Monitoring & alerts', 'Cost review & capstone'] }
 		],
+
+		tools: ['AWS Console', 'EC2', 'S3', 'RDS'],
+		jobs: ['Cloud Support Associate', 'DevOps Trainee', 'System Administrator'],
+		reviews: [{ name: 'Imran Shaikh', text: 'Deployed a real app on AWS in the final module. The cost-safety tips saved me money.', rating: 5 }, { name: 'Vikram Reddy', text: 'Clear, step-by-step cloud labs. Great start for a DevOps career.', rating: 4 }],
+		nextBatch: { date: 'Sat, 5 Dec 2026', days: 'Sat–Sun', time: '10:00 am – 1:00 pm', mode: 'Live Online', seats: 6 },
 		certificate: true,
 		mode: 'Live Online'
 	}
 ];
 
 export const instructors = [
-	{ name: 'Meera Iyer', role: 'Full-Stack Development & AI', image: 'instructor-meera', exp: '12 yrs', students: 11200, courses: 4, bio: 'Ex-product engineer from Bengaluru. Has taught 11,000+ students to build and ship real websites and AI apps.' },
-	{ name: 'Rahul Sharma', role: 'Data Science & Cloud', image: 'instructor-rahul', exp: '10 yrs', students: 9800, courses: 3, bio: 'Data scientist who moved from finance to teaching. Known for making statistics feel obvious.' },
-	{ name: 'Sana Kapoor', role: 'UI/UX & Graphic Design', image: 'instructor-sana', exp: '9 yrs', students: 7600, courses: 2, bio: 'Design lead turned trainer. Her students’ portfolios have landed jobs at startups across India.' },
-	{ name: 'Arjun Mehta', role: 'Finance, Accounting & Business', image: 'instructor-arjun', exp: '15 yrs', students: 13400, courses: 4, bio: 'Chartered accountant and former CFO. Teaches Tally, GST and budgeting the way real offices use them.' },
-	{ name: 'Priya Nair', role: 'Digital Marketing', image: null, exp: '8 yrs', students: 5400, courses: 2, bio: 'Growth marketer for D2C brands. Teaches campaigns on the budgets small businesses actually have.' },
-	{ name: 'Vikram Singh', role: 'Cyber Security', image: null, exp: '11 yrs', students: 4200, courses: 2, bio: 'Security analyst and CTF mentor. Runs EduLe’s hands-on security lab and audit capstones.' }
+	{ name: 'Meera Iyer', role: 'Full-Stack Development & AI', image: 'instructor-meera', exp: '12 yrs', students: 8200, courses: 3, slug: 'meera-iyer', bio: 'Ex-product engineer from Bengaluru. Has taught 8,200+ students to build and ship real websites and AI apps.', credentials: 'B.E. Computer Science, ex-product engineer', companies: 'Bengaluru product startups', highlights: ['Built EduLe’s full-stack and AI tracks from scratch', 'Mentored 40+ student capstone launches', 'Speaks at Pune developer meetups'] },
+	{ name: 'Rahul Sharma', role: 'Data Science & Cloud', image: 'instructor-rahul', exp: '10 yrs', students: 6400, courses: 2, slug: 'rahul-sharma', bio: 'Data scientist who moved from finance to teaching. Known for making statistics feel obvious.', credentials: 'M.Sc. Statistics, AWS Certified', companies: 'Mumbai fintech & analytics', highlights: ['10 years across finance analytics and cloud', 'Designed the data-science capstone used by 3,000+ students', 'Runs the weekend AI tools workshop'] },
+	{ name: 'Sana Kapoor', role: 'UI/UX & Graphic Design', image: 'instructor-sana', exp: '9 yrs', students: 4800, courses: 2, slug: 'sana-kapoor', bio: 'Design lead turned trainer. Her students’ portfolios have landed jobs at startups across India.', credentials: 'B.Des. Communication Design', companies: 'Pune & Mumbai design studios', highlights: ['9 years leading design teams', 'Portfolio reviews for every design student', 'Judges EduLe’s annual design showcase'] },
+	{ name: 'Arjun Mehta', role: 'Finance, Accounting & Business', image: 'instructor-arjun', exp: '15 yrs', students: 5100, courses: 4, slug: 'arjun-mehta', bio: 'Chartered accountant and former CFO. Teaches Tally, GST and budgeting the way real offices use them.', credentials: 'Chartered Accountant (CA)', companies: 'CA firms & mid-size businesses', highlights: ['15 years in accounting and finance leadership', 'Built the mock-company practice used in Tally classes', 'Guest lectures on GST for local business associations'] },
+	{ name: 'Priya Nair', role: 'Digital Marketing', image: null, exp: '8 yrs', students: 2100, courses: 1, slug: 'priya-nair', bio: 'Growth marketer for D2C brands. Teaches campaigns on the budgets small businesses actually have.', credentials: 'MBA Marketing, Google Ads certified', companies: 'D2C brands & agencies', highlights: ['8 years growing D2C brands', 'Ran campaigns for 30+ small businesses', 'Leads the free digital-marketing workshop'] },
+	{ name: 'Vikram Singh', role: 'Cyber Security', image: 'instructor-vikram', exp: '11 yrs', students: 1800, courses: 1, slug: 'vikram-singh', bio: 'Security analyst and CTF mentor. Runs EduLe’s hands-on security lab and audit capstones.', credentials: 'CEH, CompTIA Security+', companies: 'IT security teams & SOCs', highlights: ['11 years in security operations', 'Built EduLe’s authorised security lab', 'Coaches the student CTF team'] }
 ];
 
 export const batches = [
@@ -423,11 +493,13 @@ export const testimonials = [
 	{ name: 'Ananya Deshmukh', course: 'Data Science with Python', text: 'I joined after my B.Com with zero coding. Twelve weeks later I had four projects on GitHub and a data analyst interview lined up. The teachers explain until it clicks.', rating: 5 },
 	{ name: 'Rohit Patil', course: 'Tally Prime with GST', text: 'Got a job at a CA firm in Pune within a month of finishing. The mock-company practice is exactly what the office asked me to do on day one.', rating: 5 },
 	{ name: 'Kavya Reddy', course: 'UI/UX Design', text: 'The colour and Figma modules changed how I design. My portfolio from this course got me freelance clients before I even finished.', rating: 5 },
-	{ name: 'Amit Verma', course: 'Full-Stack Web Development', text: 'Evening batch fit around my shop job. Now I build websites for local businesses on the side — the instalment plan made it possible.', rating: 5 }
+	{ name: 'Amit Verma', course: 'Full-Stack Web Development', text: 'Evening batch fit around my shop job. Now I build websites for local businesses on the side — the instalment plan made it possible.', rating: 5 },
+	{ name: 'Sneha Kulkarni', course: 'Digital Marketing', text: 'I run a home business and needed customers, not theory. The WhatsApp and Instagram modules paid for the course in the first month.', rating: 5 },
+	{ name: 'Imran Shaikh', course: 'Cloud Computing with AWS', text: 'From B.Sc. graduate to cloud support associate in four months. The hands-on AWS labs were exactly what the interviewer asked about.', rating: 5 }
 ];
 
 export const placements = [
-	{ company: 'TechMahindra Services', role: 'Junior Data Analyst', students: 214 },
+	{ company: 'TechServe Solutions', role: 'Junior Data Analyst', students: 214 },
 	{ company: 'Pune Accounting Partners', role: 'Accounts Executive', students: 186 },
 	{ company: 'WebKraft Studio', role: 'Frontend Developer', students: 142 },
 	{ company: 'RetailKart India', role: 'Digital Marketing Executive', students: 128 },
@@ -436,21 +508,83 @@ export const placements = [
 ];
 
 export const blogPosts = [
-	{ slug: 'best-computer-courses-after-12th', title: 'Best Computer Courses After 12th in 2026', excerpt: 'Confused after boards? These five job-ready courses pay off fastest — with honest fees, durations and starting salaries.', date: '12 Nov 2026', read: '6 min read', image: 'course-data-science', category: 'Career Guide', body: ['After Class 12, the question is not which course is trendy — it is which one gets you hired. In our Pune classrooms, the fastest job outcomes this year came from five paths: data analysis, web development, accounting with Tally and GST, UI/UX design, and digital marketing.', 'Data analysis suits students who like maths and patterns; web development suits builders; Tally and GST suit commerce students and lead directly to accounts jobs in CA firms and small businesses. UI/UX rewards visual thinkers, and digital marketing rewards communicators.', 'Before you enrol anywhere, ask three questions: does the course include real projects, does it end with a verifiable certificate, and does the institute help with interviews? If any answer is vague, keep looking.'] },
-	{ slug: 'python-vs-excel-which-first', title: 'Python or Excel First? A Practical Answer for Beginners', excerpt: 'Both are useful, but the right order depends on your goal. Here is how to choose — and when to learn both.', date: '28 Oct 2026', read: '5 min read', image: 'course-python', category: 'Learning', body: ['If your goal is an office job in the next three months, learn Excel first. Advanced Excel — PivotTables, XLOOKUP, dashboards — is the single most requested skill in accounts, sales and operations job posts.', 'If your goal is a tech career, start with Python. It opens data analysis, automation and web development, and it teaches you to think like a programmer.', 'The good news: they stack. Excel teaches you to think in tables; Python teaches you to automate them. Most of our students do Excel in month one and Python next — and employers notice both on a CV.'] },
-	{ slug: 'how-to-verify-certificate', title: 'How Employers Verify an EduLe Certificate (and Why It Matters)', excerpt: 'Every EduLe certificate carries a verification code. Here is exactly how hiring managers check it in under a minute.', date: '15 Oct 2026', read: '4 min read', image: 'classroom', category: 'Certificates', body: ['Every certificate we issue carries a unique code, printed on the certificate and stored in our records. An employer visits our verification page, enters the code, and sees the student name, course, completion date and grade — in under a minute.', 'This matters because fake certificates are common in hiring. A verifiable certificate protects honest students: your achievement is checkable, not just claimed.', 'If you are a student, keep your code safe and add it to your CV and LinkedIn. If you are an employer, try the demo verification on our Certificates page.'] }
+	{ slug: 'best-computer-courses-after-12th', author: 'Meera Iyer', title: 'Best Computer Courses After 12th in 2026', excerpt: 'Confused after boards? These five job-ready courses pay off fastest — with honest fees, durations and starting salaries.', date: '12 Nov 2026', read: '6 min read', image: 'course-data-science', category: 'Career Guide', body: ['After Class 12, the question is not which course is trendy — it is which one gets you hired. In our Pune classrooms, the fastest job outcomes this year came from five paths: data analysis, web development, accounting with Tally and GST, UI/UX design, and digital marketing.', 'Data analysis suits students who like maths and patterns; web development suits builders; Tally and GST suit commerce students and lead directly to accounts jobs in CA firms and small businesses. UI/UX rewards visual thinkers, and digital marketing rewards communicators.', 'Before you enrol anywhere, ask three questions: does the course include real projects, does it end with a verifiable certificate, and does the institute help with interviews? If any answer is vague, keep looking.'] },
+	{ slug: 'python-vs-excel-which-first', author: 'Rahul Sharma', title: 'Python or Excel First? A Practical Answer for Beginners', excerpt: 'Both are useful, but the right order depends on your goal. Here is how to choose — and when to learn both.', date: '28 Oct 2026', read: '5 min read', image: 'course-python', category: 'Learning', body: ['If your goal is an office job in the next three months, learn Excel first. Advanced Excel — PivotTables, XLOOKUP, dashboards — is the single most requested skill in accounts, sales and operations job posts.', 'If your goal is a tech career, start with Python. It opens data analysis, automation and web development, and it teaches you to think like a programmer.', 'The good news: they stack. Excel teaches you to think in tables; Python teaches you to automate them. Most of our students do Excel in month one and Python next — and employers notice both on a CV.'] },
+	{ slug: 'how-to-verify-certificate', author: 'Arjun Mehta', title: 'How Employers Verify an EduLe Certificate (and Why It Matters)', excerpt: 'Every EduLe certificate carries a verification code. Here is exactly how hiring managers check it in under a minute.', date: '15 Oct 2026', read: '4 min read', image: 'classroom', category: 'Certificates', body: ['Every certificate we issue carries a unique code, printed on the certificate and stored in our records. An employer visits our verification page, enters the code, and sees the student name, course, completion date and grade — in under a minute.', 'This matters because fake certificates are common in hiring. A verifiable certificate protects honest students: your achievement is checkable, not just claimed.', 'If you are a student, keep your code safe and add it to your CV and LinkedIn. If you are an employer, try the demo verification on our Certificates page.'] },
+	{ slug: 'tally-vs-excel-which-gets-you-hired', author: 'Arjun Mehta', title: 'Tally vs Excel: Which Accounting Skill Gets You Hired Faster?', excerpt: 'Both appear in nearly every accounts job post. Here is which one to learn first — and why most hired candidates know both.', date: '18 Nov 2026', read: '5 min read', image: 'course-tally', category: 'Career Guide', body: ['Open any accounts job post in Pune and you will see the same two words: Tally and Excel. Employers rarely ask for one without the other — but the order you learn them in matters.', 'Learn Excel first if you need a job in weeks: PivotTables, XLOOKUP and dashboards are the daily tools of every accounts, sales and operations team. Tally comes next, because it is where the actual books live — vouchers, ledgers, GST returns and payroll.', 'The candidates who get hired fastest are the ones who can do both in one workflow: pull a report from Tally, clean it in Excel, and present it to a manager. That is exactly how our Tally course is taught — on a mock company, not on slides.'] },
+	{ slug: 'free-ai-tools-office-work-2026', author: 'Rahul Sharma', title: '10 Free AI Tools Every Office Worker Should Know in 2026', excerpt: 'From drafting emails to cleaning spreadsheets — the free AI tools that genuinely save time at work, and the ones to skip.', date: '5 Nov 2026', read: '6 min read', image: 'course-ai', category: 'Learning', body: ['AI tools are everywhere now, but only a handful actually help in a normal office job. The useful ones share one trait: they remove a boring, repeated task — drafting a standard email, summarising a long document, or cleaning a messy spreadsheet.', 'Start with three: a chatbot for drafting and summarising, a spreadsheet helper for formulas, and a meeting-notes tool. Learn to check their output — AI makes confident mistakes, and spotting them is the real skill.', 'We teach all of this hands-on in our AI Foundations course, including when not to trust the tool. The goal is not to replace your judgement; it is to give you back two hours a day.'] },
+	{ slug: 'data-analyst-interview-preparation', author: 'Meera Iyer', title: 'How to Prepare for a Data Analyst Interview (With Sample Questions)', excerpt: 'What interviewers actually ask junior data analysts — and how to answer with projects, not just theory.', date: '22 Oct 2026', read: '7 min read', image: 'course-data-science', category: 'Career Guide', body: ['Junior data analyst interviews rarely test exotic maths. They test three things: can you clean messy data, can you explain a chart in plain language, and can you use SQL and Excel or Python without freezing.', 'Prepare two stories: one project where you found something surprising in data, and one where you fixed a messy dataset. Interviewers remember stories far longer than they remember definitions.', 'Bring your work. A GitHub link, a dashboard screenshot, or a one-page case study beats a long list of course names on a CV. Our data science students build four such projects — that is what gets them shortlisted.'] }
 ];
 
 export const faqs = [
 	{ q: 'Do I need a computer background to join?', a: 'No. Most of our students start with no prior knowledge. Beginner courses assume nothing, and our faculty explain every concept from scratch with plenty of practice.' },
 	{ q: 'Are the certificates recognised by employers?', a: 'Yes. Every EduLe certificate carries a unique verification code that employers can check on our Certificates page. We also add certificates to your LinkedIn profile on request.' },
-	{ q: 'Can I pay fees in instalments?', a: 'Yes. Most courses can be split into 2–3 instalments at no extra charge. The first instalment is due at enrolment; the rest follow the batch schedule. See the Fees page for the exact split per course.' },
+	{ q: 'Can I pay fees in instalments?', a: 'Yes. Most courses can be split into 2 instalments at no extra charge. The first instalment is due at enrolment; the rest follow the batch schedule. See the Fees page for the exact split per course.' },
 	{ q: 'Do you offer online classes?', a: 'Yes. Every course runs in classroom batches in Pune and as live online batches with the same faculty, recordings and doubt-clearing sessions.' },
 	{ q: 'What if I miss a class?', a: 'All live sessions are recorded and shared the same day, and every batch has a weekly doubt-clearing slot. You can also repeat a missed module with the next batch free of charge.' },
 	{ q: 'Do you help with jobs and placements?', a: 'Yes. We run resume workshops, mock interviews and placement drives with partner employers in Pune and Mumbai. Placement support is free for all certificate-course students — see the Placements page.' },
 	{ q: 'Is there a refund policy?', a: 'Yes. If you withdraw within the first 7 days of your batch, we refund the unused portion of your fees minus a ₹1,000 processing charge. See the Terms page for full details.' },
-	{ q: 'What is the 25% discount on the homepage?', a: 'All courses are currently 25% off the listed fee as our enrolment offer. The discounted price is the one shown on each course — what you see is what you pay.' }
+	{ q: 'What is the discount on the homepage?', a: 'All courses are currently up to 30% off the listed fee as our enrolment offer. The discounted price is the one shown on each course — what you see is what you pay.' },
+	{ q: 'Can I attend a free demo class before enrolling?', a: 'Yes. Every course offers a free 60-minute demo class — online or in our Pune classroom. Pick a date and slot on the Free Demo page and we confirm on WhatsApp within a few hours.' },
+	{ q: 'Do you offer scholarships?', a: 'Yes. We offer a merit scholarship of up to ₹10,000, a 15% Women in Tech discount on Development and Data Science courses, and a 10% early-bird discount. See the Scholarships page for eligibility.' }
 ];
+
+export type CareerPath = {
+	slug: string;
+	title: string;
+	goal: string;
+	courses: string[];
+	weeks: number;
+	fee: number;
+	bundle: number;
+	roles: string[];
+	salary: string;
+	image: string;
+};
+
+export const careerPaths: CareerPath[] = [
+	{ slug: 'data-analyst', title: 'Become a Data Analyst', goal: 'From zero to job-ready analyst: spreadsheets, Python and real ML projects.', courses: ['python-programming', 'excel-advanced', 'data-science-python'], weeks: 24, fee: 54497, bundle: 49999, roles: ['Data Analyst', 'MIS Executive', 'Business Analyst'], salary: '₹3.5–6 LPA*', image: 'course-data-science' },
+	{ slug: 'full-stack-developer', title: 'Become a Full-Stack Developer', goal: 'Build and deploy real websites, then run them on the cloud.', courses: ['web-development', 'python-programming', 'cloud-computing-aws'], weeks: 26, fee: 58997, bundle: 54999, roles: ['Frontend Developer', 'Full-Stack Developer', 'Web Developer'], salary: '₹4–8 LPA*', image: 'course-web-dev' },
+	{ slug: 'ui-ux-designer', title: 'Become a UI/UX Designer', goal: 'Colour, layout and Figma — a portfolio that wins freelance and full-time work.', courses: ['ux-color-schemes', 'graphic-design-badges'], weeks: 14, fee: 53500, bundle: 49999, roles: ['UI Designer', 'Visual Designer', 'Graphic Designer'], salary: '₹3–5.5 LPA*', image: 'course-uiux' },
+	{ slug: 'accountant', title: 'Become an Accountant', goal: 'Tally, GST and Excel — the exact combo CA firms and small businesses hire for.', courses: ['tally-gst', 'excel-advanced', 'finance-budget'], weeks: 17, fee: 15498, bundle: 13999, roles: ['Accounts Executive', 'GST Assistant', 'Billing Executive'], salary: '₹2.5–4.5 LPA*', image: 'course-tally' }
+];
+
+export const workshops = [
+	{ slug: 'build-first-website', title: 'Free Workshop: Build Your First Website in 2 Hours', date: 'Sat, 21 Nov 2026', time: '11:00 am – 1:00 pm', mode: 'Classroom + Live Online', trainer: 'Meera Iyer', image: 'workshop-seminar', seats: 40, desc: 'No experience needed. Leave with a live one-page website you built yourself — and a clear idea of what a web career looks like.' },
+	{ slug: 'ai-tools-office-work', title: 'AI Tools for Office Work', date: 'Sat, 28 Nov 2026', time: '11:00 am – 12:30 pm', mode: 'Live Online', trainer: 'Rahul Sharma', image: 'course-ai', seats: 100, desc: 'The free AI tools that genuinely save time at work — drafting, spreadsheets, summaries — and how to check their output.' },
+	{ slug: 'tally-gst-live-return', title: 'Tally + GST: File a Return Live', date: 'Sun, 29 Nov 2026', time: '10:00 am – 12:00 pm', mode: 'Classroom, Pune', trainer: 'Arjun Mehta', image: 'course-tally', seats: 30, desc: 'Watch a full GST return filed step by step on a mock company, then try it yourself with faculty beside you.' },
+	{ slug: 'design-logo-figma', title: 'Design a Logo in Figma', date: 'Sat, 5 Dec 2026', time: '11:00 am – 1:00 pm', mode: 'Live Online', trainer: 'Sana Kapoor', image: 'course-uiux', seats: 60, desc: 'From a blank canvas to a finished logo using grids and geometry — a perfect first taste of graphic design.' }
+];
+
+export const alumni = [
+	{ name: 'Ananya Deshmukh', course: 'Data Science with Python', previous: 'B.Com graduate, no coding', current: 'Junior Data Analyst', company: 'TechServe Solutions', salary: '₹4.2 LPA', image: 'alumni-graduate', quote: 'I joined after my B.Com with zero coding. Twelve weeks later I had four projects on GitHub and a data analyst interview lined up.' },
+	{ name: 'Rohit Patil', course: 'Tally Prime with GST', previous: '12th pass, looking for work', current: 'Accounts Executive', company: 'BrightAccounts LLP', salary: '₹3 LPA', image: null, quote: 'Got a job at a CA firm in Pune within a month of finishing. The mock-company practice is exactly what the office asked me to do on day one.' },
+	{ name: 'Kavya Reddy', course: 'UI/UX Design', previous: 'Self-taught designer', current: 'UI Designer', company: 'DesignNest Agency', salary: '₹5 LPA', image: null, quote: 'The colour and Figma modules changed how I design. My portfolio from this course got me freelance clients before I even finished.' },
+	{ name: 'Amit Verma', course: 'Full-Stack Web Development', previous: 'Shop assistant', current: 'Frontend Developer', company: 'WebKraft Studio', salary: '₹4.5 LPA', image: null, quote: 'Evening batch fit around my shop job. Now I build websites for local businesses on the side.' },
+	{ name: 'Sneha Kulkarni', course: 'Digital Marketing', previous: 'Home business owner', current: 'Digital Marketing Executive', company: 'RetailKart India', salary: '₹3.6 LPA', image: null, quote: 'The WhatsApp and Instagram modules paid for the course in the first month. Customers started coming from social media.' },
+	{ name: 'Imran Shaikh', course: 'Cloud Computing with AWS', previous: 'B.Sc. graduate', current: 'Cloud Support Associate', company: 'CloudNine IT', salary: '₹4 LPA', image: null, quote: 'From B.Sc. graduate to cloud support associate in four months. The hands-on AWS labs were exactly what the interviewer asked about.' }
+];
+
+export const partners = ['TechServe Solutions', 'BrightAccounts LLP', 'WebKraft Studio', 'RetailKart India', 'CloudNine IT', 'DesignNest Agency', 'Pune Accounting Partners', 'DataBridge Analytics'];
+
+export const scholarships = [
+	{ name: 'Merit Scholarship', amount: 'Up to ₹10,000 off', desc: 'Score in the top 10% of our free entrance test and get up to ₹10,000 off any certificate course.', eligibility: 'Open to all new students; test taken online or in Pune.' },
+	{ name: 'Women in Tech', amount: '15% off', desc: '15% off all Development and Data Science courses for women students, every batch.', eligibility: 'All women students; applied automatically at enrolment.' },
+	{ name: 'Early Bird', amount: '10% off', desc: 'Enrol at least 2 weeks before your batch starts and save an extra 10% on the fee.', eligibility: 'All courses; combines with the enrolment offer.' },
+	{ name: 'Refer & Earn', amount: '₹1,000 off each', desc: 'Refer a friend — when they enrol, you both get ₹1,000 off your next course.', eligibility: 'Current and past students; no limit on referrals.' }
+];
+
+export function instructorSlug(name: string): string | null {
+	return instructors.find((t) => t.name === name)?.slug ?? null;
+}
+
+export function getInstructor(slug: string) {
+	return instructors.find((t) => t.slug === slug);
+}
+
+export function getCareerPath(slug: string) {
+	return careerPaths.find((p) => p.slug === slug);
+}
 
 export function inr(n: number): string {
 	return '₹' + n.toLocaleString('en-IN');

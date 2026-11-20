@@ -1,31 +1,37 @@
 <script lang="ts">
-	import { Award, BookOpen, Check, ChevronDown, Clock, Star, Users } from '@lucide/svelte';
+	import { Award, BookOpen, CalendarClock, Check, ChevronDown, Clock, Download, Star, Users } from '@lucide/svelte';
 	import Picture from '#lib/components/Picture.svelte';
 	import CourseCard from '#lib/components/CourseCard.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 	import { courses, inr, site } from '#lib/data/site.ts';
 
 	let { data } = $props();
 	const course = $derived(data.course);
 
 	let openModule = $state(0);
-	const related = courses.filter((c) => c.category === course.category && c.id !== course.id).slice(0, 3);
-	const shownRelated = related.length ? related : courses.filter((c) => c.id !== course.id).slice(0, 3);
-	const instalments = course.price === 0 ? [] : [Math.ceil(course.price / 2), course.price - Math.ceil(course.price / 2)];
+	const related = $derived(courses.filter((c) => c.category === course.category && c.id !== course.id).slice(0, 3));
+	const shownRelated = $derived(related.length ? related : courses.filter((c) => c.id !== course.id).slice(0, 3));
+	const instalments = $derived(course.price === 0 ? [] : [Math.ceil(course.price / 2), course.price - Math.ceil(course.price / 2)]);
 
-	const courseJsonLd = {
+	const courseJsonLd = $derived({
 		'@context': 'https://schema.org',
 		'@type': 'Course',
 		name: course.title,
 		description: course.short,
+		image: `${site.url}/images/${course.image}-1200.jpg`,
 		provider: { '@type': 'EducationalOrganization', name: 'EduLe Computer Training Institute', url: site.url },
 		hasCourseInstance: { '@type': 'CourseInstance', courseMode: course.mode, courseWorkload: course.duration },
 		offers: { '@type': 'Offer', price: course.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock' }
-	};
+	});
 </script>
 
+<Seo
+	title="{course.title} — EduLe"
+	description="{course.short} Fees {course.price === 0 ? 'Free' : inr(course.price)}, {course.weeks} weeks, {course.lectures} lectures, certificate included. Classroom in Pune + live online."
+	image={course.image}
+/>
+
 <svelte:head>
-	<title>{course.title} — EduLe</title>
-	<meta name="description" content="{course.short} Fees {course.price === 0 ? 'Free' : inr(course.price)}, {course.weeks} weeks, {course.lectures} lectures, certificate included. Classroom in Pune + live online." />
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html `<script type="application/ld+json">${JSON.stringify(courseJsonLd)}</script>`}
 </svelte:head>
@@ -63,10 +69,12 @@
 						{#if course.oldPrice}<span class="ml-2 text-lg font-medium text-muted line-through">{inr(course.oldPrice)}</span>{/if}
 					</p>
 					{#if course.price > 0}
-						<p class="mt-1 text-sm text-muted">or 2 instalments of {inr(instalments[0])} — no extra charge. 25% enrolment offer applied.</p>
+						<p class="mt-1 text-sm text-muted">or 2 instalments of {inr(instalments[0])} — no extra charge. Enrolment offer applied.</p>
 					{/if}
 					<a href="/admissions?course={course.id}" class="mt-5 block min-h-12 rounded-full bg-leaf py-3.5 text-center font-display text-base font-bold text-white transition-colors duration-200 hover:bg-leaf-dark">Enrol Now</a>
-					<a href="/fees" class="mt-3 block min-h-12 rounded-full border-2 border-leaf py-3 text-center font-display text-base font-bold text-leaf-dark transition-colors duration-200 hover:bg-leaf hover:text-white">See Full Fee Details</a>
+					<a href="/demo?course={course.id}" class="mt-3 block min-h-12 rounded-full border-2 border-leaf py-3 text-center font-display text-base font-bold text-leaf-dark transition-colors duration-200 hover:bg-leaf hover:text-white">Book a Free Demo Class</a>
+					<a href="/courses/{course.id}/syllabus" class="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-line py-3 text-center font-display text-base font-bold text-ink transition-colors duration-200 hover:border-leaf hover:text-leaf-dark"><Download size={18} aria-hidden="true" /> Download Syllabus (PDF)</a>
+					<a href="/fees" class="mt-3 block text-center text-sm font-semibold text-leaf-dark hover:underline">See Full Fee Details</a>
 					<ul class="mt-5 space-y-2 text-sm text-muted">
 						<li class="flex gap-2"><Check size={17} class="shrink-0 text-leaf-dark" aria-hidden="true" /> {course.mode}</li>
 						<li class="flex gap-2"><Check size={17} class="shrink-0 text-leaf-dark" aria-hidden="true" /> Recordings + study material included</li>
@@ -93,18 +101,46 @@
 			<div class="mt-5 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white">
 				{#each course.curriculum as mod, i}
 					<div>
-						<button type="button" class="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left font-display text-base font-bold sm:text-lg" aria-expanded={openModule === i} onclick={() => (openModule = openModule === i ? -1 : i)}>
+						<button type="button" class="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left font-display text-base font-bold sm:text-lg" aria-expanded={openModule === i} aria-controls="module-{i}" onclick={() => (openModule = openModule === i ? -1 : i)}>
 							<span>Module {i + 1}: {mod.title}</span>
 							<ChevronDown size={20} class="shrink-0 text-leaf-dark transition-transform duration-200 {openModule === i ? 'rotate-180' : ''}" aria-hidden="true" />
 						</button>
-						{#if openModule === i}
-							<ul class="space-y-2 px-5 pb-5">
+						<div id="module-{i}" class="grid transition-all duration-300 ease-out {openModule === i ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}" aria-hidden={openModule !== i}>
+							<ul class="space-y-2 overflow-hidden px-5 pb-5">
 								{#each mod.lessons as lesson}
 									<li class="flex items-center gap-2 text-sm text-muted"><BookOpen size={15} class="shrink-0 text-leaf-dark" aria-hidden="true" />{lesson}</li>
 								{/each}
 							</ul>
-						{/if}
+						</div>
 					</div>
+				{/each}
+			</div>
+
+			<h2 class="mt-10 font-display text-2xl font-extrabold sm:text-3xl">Tools you will learn</h2>
+			<div class="mt-5 flex flex-wrap gap-2">
+				{#each course.tools as tool}
+					<span class="rounded-full border border-line bg-white px-4 py-2 text-sm font-bold text-ink">{tool}</span>
+				{/each}
+			</div>
+
+			<h2 class="mt-10 font-display text-2xl font-extrabold sm:text-3xl">Jobs this course prepares you for</h2>
+			<ul class="mt-5 grid gap-3 sm:grid-cols-3">
+				{#each course.jobs as job}
+					<li class="flex items-center gap-2 rounded-xl border border-line bg-white p-4 text-sm font-bold"><Check size={18} class="shrink-0 text-leaf-dark" aria-hidden="true" />{job}</li>
+				{/each}
+			</ul>
+
+			<h2 class="mt-10 font-display text-2xl font-extrabold sm:text-3xl">What students say</h2>
+			<p class="mt-2 text-sm text-muted">Reviews from past students of this course (shown as text — we never mark up our own reviews for search stars).</p>
+			<div class="mt-5 grid gap-4 sm:grid-cols-2">
+				{#each course.reviews as r}
+					<figure class="rounded-2xl border border-line bg-white p-5">
+						<div class="flex gap-0.5" aria-label="Rated {r.rating} out of 5">
+							{#each Array(r.rating) as _}<Star size={16} class="fill-gold text-gold" aria-hidden="true" />{/each}
+						</div>
+						<blockquote class="mt-3 text-sm leading-relaxed">“{r.text}”</blockquote>
+						<figcaption class="mt-3 text-sm font-bold">{r.name}</figcaption>
+					</figure>
 				{/each}
 			</div>
 
@@ -115,6 +151,15 @@
 		</div>
 
 		<aside class="space-y-6">
+			<div class="rounded-2xl border border-leaf bg-mint p-6">
+				<h2 class="flex items-center gap-2 font-display text-xl font-extrabold"><CalendarClock size={22} class="text-leaf-dark" aria-hidden="true" /> Next batch</h2>
+				<p class="mt-3 font-display text-lg font-extrabold text-leaf-dark">{course.nextBatch.date}</p>
+				<p class="mt-1 text-sm text-muted">{course.nextBatch.days} · {course.nextBatch.time}</p>
+				<p class="mt-1 text-sm text-muted">{course.nextBatch.mode}</p>
+				<p class="mt-3 text-sm font-bold text-ink">{course.nextBatch.seats} seats left in this batch</p>
+				<a href="/admissions?course={course.id}" class="mt-4 block min-h-12 rounded-full bg-leaf py-3 text-center font-display text-base font-bold text-white hover:bg-leaf-dark">Enrol in This Batch</a>
+				<a href="/batches" class="mt-3 block text-center text-sm font-semibold text-leaf-dark hover:underline">See all batch dates</a>
+			</div>
 			<div class="rounded-2xl border border-line bg-white p-6">
 				<h2 class="font-display text-xl font-extrabold">Course facts</h2>
 				<dl class="mt-4 space-y-3 text-sm">
@@ -129,7 +174,7 @@
 			<div class="rounded-2xl bg-leaf-deep p-6 text-white">
 				<h2 class="font-display text-xl font-extrabold">Not sure yet?</h2>
 				<p class="mt-2 text-sm leading-relaxed text-white/85">Book a free counselling session or attend a demo class before you enrol. No fee, no obligation.</p>
-				<a href="/contact" class="mt-4 block min-h-12 rounded-full bg-white py-3 text-center font-display text-base font-bold text-leaf-deep">Book a Free Demo Class</a>
+				<a href="/demo?course={course.id}" class="mt-4 block min-h-12 rounded-full bg-white py-3 text-center font-display text-base font-bold text-leaf-deep">Book a Free Demo Class</a>
 			</div>
 		</aside>
 	</div>

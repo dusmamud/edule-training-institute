@@ -1,8 +1,13 @@
 <script lang="ts">
 	import PageHero from '#lib/components/PageHero.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 </script>
 
-<svelte:head><title>Privacy Policy — EduLe</title></svelte:head>
+<Seo
+	title="Privacy Policy — EduLe"
+	description="How EduLe handles your information: what we collect from enquiry and admissions forms, how we use it, and your rights."
+	image="classroom"
+/>
 
 <PageHero eyebrow="Privacy Policy" title="How we handle your information" text="Last updated: 19 November 2026. This is a demo policy for the EduLe website." />
 

@@ -9,15 +9,18 @@
 	import '../app.css';
 	import { onNavigate } from '$app/navigation';
 	import { MessageCircle, Phone } from '@lucide/svelte';
+	import Lenis from 'lenis';
 	import Header from '#lib/components/Header.svelte';
 	import Footer from '#lib/components/Footer.svelte';
+	import CompareBar from '#lib/components/CompareBar.svelte';
+	import { prefersReducedMotion } from '#lib/reveal.ts';
 	import { site } from '#lib/data/site.ts';
 
 	let { children } = $props();
 
 	onNavigate((navigation) => {
 		if (!('startViewTransition' in document)) return;
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		if (prefersReducedMotion()) return;
 		return new Promise((resolve) => {
 			document.startViewTransition(async () => {
 				resolve();
@@ -26,16 +29,22 @@
 		});
 	});
 
+	// Lenis smooth scroll — motion only, never for reduced-motion users.
+	// Scroll reveals use the `use:reveal` action (IntersectionObserver), not
+	// a mount-once querySelectorAll, so client-side navigation stays visible.
 	$effect(() => {
-		const els = document.querySelectorAll('.reveal');
-		const io = new IntersectionObserver(
-			(entries) => {
-				for (const e of entries) if (e.isIntersecting) e.target.classList.add('is-visible');
-			},
-			{ threshold: 0.12 }
-		);
-		els.forEach((el) => io.observe(el));
-		return () => io.disconnect();
+		if (prefersReducedMotion()) return;
+		const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+		let raf = 0;
+		const loop = (time: number) => {
+			lenis.raf(time);
+			raf = requestAnimationFrame(loop);
+		};
+		raf = requestAnimationFrame(loop);
+		return () => {
+			cancelAnimationFrame(raf);
+			lenis.destroy();
+		};
 	});
 
 	const jsonLd = {
@@ -51,14 +60,6 @@
 </script>
 
 <svelte:head>
-	<title>EduLe — Computer Training Institute in Pune | Courses, Fees &amp; Certificates</title>
-	<meta name="description" content="Learn from anywhere and build your bright career. Job-ready computer courses in Pune — development, data science, design, Tally & GST — with certificates and placement support." />
-	<link rel="canonical" href={site.url} />
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="EduLe — Computer Training Institute in Pune" />
-	<meta property="og:description" content="Job-ready computer courses with certificates and placement support. 25% off all courses." />
-	<meta property="og:url" content={site.url} />
-	<meta name="twitter:card" content="summary_large_image" />
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`}
 </svelte:head>
@@ -70,13 +71,14 @@
 <Header />
 <main id="main">{@render children()}</main>
 <Footer />
+<CompareBar />
 
 <a
 	href={site.whatsappHref}
 	target="_blank"
 	rel="noopener"
 	aria-label="Chat with EduLe on WhatsApp"
-	class="fixed right-5 bottom-6 z-40 hidden h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition-transform duration-200 hover:scale-105 md:flex"
+	class="fixed right-5 bottom-24 z-40 hidden h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition-transform duration-200 hover:scale-105 lg:bottom-6 lg:flex"
 >
 	<MessageCircle size={26} aria-hidden="true" />
 </a>

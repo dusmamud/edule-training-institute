@@ -1,7 +1,14 @@
 <script lang="ts">
-	import { ArrowRight, Award, BookOpen, Briefcase, ChevronLeft, ChevronRight, Clock, GraduationCap, Search, Star, Users } from '@lucide/svelte';
+	import { ArrowRight, Award, BookOpen, Briefcase, CalendarClock, ChevronLeft, ChevronRight, Clock, Compass, GraduationCap, Search, Star, Users } from '@lucide/svelte';
+	import emblaCarouselSvelte from 'embla-carousel-svelte';
+	import type { EmblaCarouselType } from 'embla-carousel';
+	import gsap from 'gsap';
 	import Picture from '#lib/components/Picture.svelte';
 	import CourseCard from '#lib/components/CourseCard.svelte';
+	import Seo from '#lib/components/Seo.svelte';
+	import CountUp from '#lib/components/CountUp.svelte';
+	import PartnerMarquee from '#lib/components/PartnerMarquee.svelte';
+	import { reveal, prefersReducedMotion } from '#lib/reveal.ts';
 	import { blogPosts, categories, courses, instructors, site, testimonials } from '#lib/data/site.ts';
 
 	let query = $state('');
@@ -16,46 +23,80 @@
 		)
 	);
 	const visible = $derived(filtered.slice(0, shown));
+
+	const nextBatches = $derived([...courses].sort((a, b) => new Date(a.nextBatch.date).getTime() - new Date(b.nextBatch.date).getTime()).slice(0, 4));
+
+	// Hero entrance (GSAP) — transform + opacity only, gated by reduced-motion.
+	// Hero elements never carry .reveal, so no GSAP/reveal conflict.
+	$effect(() => {
+		if (prefersReducedMotion()) return;
+		const ctx = gsap.context(() => {
+			gsap.from('.hero-anim', { y: 26, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out', clearProps: 'transform,opacity' });
+		});
+		return () => ctx.revert();
+	});
+
+	// Testimonial carousel (Embla)
+	let emblaApi: EmblaCarouselType | undefined = $state();
+	let selected = $state(0);
+	function onEmblaInit(e: CustomEvent<EmblaCarouselType>) {
+		emblaApi = e.detail;
+		emblaApi.on('select', () => (selected = emblaApi?.selectedScrollSnap() ?? 0));
+	}
+	$effect(() => {
+		if (!emblaApi || prefersReducedMotion()) return;
+		const id = window.setInterval(() => emblaApi?.scrollNext(), 6000);
+		return () => window.clearInterval(id);
+	});
 </script>
 
-<svelte:head>
-	<title>EduLe — Computer Training Institute in Pune | Courses, Fees &amp; Certificates</title>
-</svelte:head>
+<Seo
+	title="EduLe — Computer Training Institute in Pune | Courses, Fees & Certificates"
+	description="Learn from anywhere and build your bright career. Job-ready computer courses in Pune — development, data science, design, Tally & GST — with certificates and placement support."
+	image="hero-student-transparent"
+/>
 
 <!-- HERO — faithful to the reference -->
 <section class="overflow-hidden bg-mint">
 	<div class="mx-auto grid max-w-7xl items-center gap-8 px-4 pt-10 pb-14 lg:grid-cols-2 lg:pt-16 lg:pb-20">
 		<div>
-			<p class="text-sm font-bold tracking-wide text-leaf-dark uppercase">Start your favourite course</p>
-			<h1 class="mt-3 font-display text-4xl leading-[1.08] font-extrabold text-ink sm:text-5xl lg:text-[3.4rem]">
+			<p class="hero-anim text-sm font-bold tracking-wide text-leaf-dark uppercase">Start your favourite course</p>
+			<h1 class="hero-anim mt-3 font-display text-4xl leading-[1.08] font-extrabold text-ink sm:text-5xl lg:text-[3.4rem]">
 				Now learning from anywhere, and build your <span class="text-leaf-dark underline decoration-leaf decoration-4 underline-offset-8">bright</span> career.
 			</h1>
-			<p class="mt-5 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
+			<p class="hero-anim mt-5 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
 				Practical computer courses in Pune and live online — development, data science, design, accounting and business — taught by working professionals, with certificates and placement support.
 			</p>
-			<div class="mt-7 flex flex-wrap items-center gap-3">
+			<div class="hero-anim mt-7 flex flex-wrap items-center gap-3">
 				<a href="/courses" class="min-h-12 rounded-full bg-leaf px-7 py-3.5 font-display text-base font-bold text-white transition-colors duration-200 hover:bg-leaf-dark">Start A Course</a>
+				<a href="/demo" class="min-h-12 rounded-full border-2 border-leaf-dark px-7 py-3 font-display text-base font-bold text-leaf-dark transition-colors duration-200 hover:bg-leaf-dark hover:text-white">Book a Free Demo</a>
 				<a href="/fees" class="min-h-12 rounded-full border-2 border-leaf-dark px-7 py-3 font-display text-base font-bold text-leaf-dark transition-colors duration-200 hover:bg-leaf-dark hover:text-white">View Fees in ₹</a>
 			</div>
-			<dl class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
-				<div><dt class="sr-only">Students trained</dt><dd class="font-display text-xl font-extrabold text-ink">{site.stats.students.toLocaleString('en-IN')}+</dd><dd class="text-muted">students trained</dd></div>
-				<div><dt class="sr-only">Courses</dt><dd class="font-display text-xl font-extrabold text-ink">{site.stats.courses.toLocaleString('en-IN')}</dd><dd class="text-muted">courses</dd></div>
-				<div><dt class="sr-only">Placed students</dt><dd class="font-display text-xl font-extrabold text-ink">{site.stats.placed.toLocaleString('en-IN')}+</dd><dd class="text-muted">placed in jobs</dd></div>
+			<dl class="hero-anim mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+				<div><dt class="sr-only">Students trained</dt><dd class="font-display text-xl font-extrabold text-ink"><CountUp value={site.stats.students} suffix="+" /></dd><dd class="text-muted">students trained</dd></div>
+				<div><dt class="sr-only">Courses</dt><dd class="font-display text-xl font-extrabold text-ink"><CountUp value={site.stats.courses} /></dd><dd class="text-muted">job-ready courses</dd></div>
+				<div><dt class="sr-only">Placed students</dt><dd class="font-display text-xl font-extrabold text-ink"><CountUp value={site.stats.placed} suffix="+" /></dd><dd class="text-muted">placed in jobs</dd></div>
 			</dl>
 		</div>
-		<div class="relative mx-auto w-full max-w-lg">
+		<div class="hero-anim relative mx-auto w-full max-w-lg">
 			<div class="absolute top-2 left-2 flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md" aria-label="Rated 4.8 out of 5">
 				<span class="flex items-center gap-1 font-display text-lg font-extrabold text-ink">4.8 <Star size={18} class="fill-gold text-gold" aria-hidden="true" /></span>
 				<span class="text-xs text-muted">rating (9.8K)</span>
 			</div>
 			<Picture name="hero-student-transparent" alt="Smiling student holding a laptop" width={1200} height={1200} eager={true} sizes="(max-width: 1024px) 90vw, 560px" imgClass="mx-auto w-full max-w-md rounded-[2rem] object-cover sm:max-w-lg" />
-			<div class="absolute right-2 bottom-6 flex h-28 w-28 flex-col items-center justify-center rounded-full bg-leaf text-center text-white shadow-lg sm:h-32 sm:w-32" aria-label="1,235 courses">
+			<div class="absolute right-2 bottom-6 flex h-28 w-28 flex-col items-center justify-center rounded-full bg-leaf text-center text-white shadow-lg sm:h-32 sm:w-32" aria-label="{site.stats.courses} courses">
 				<BookOpen size={26} aria-hidden="true" />
-				<span class="font-display text-xl leading-tight font-extrabold sm:text-2xl">1,235</span>
+				<span class="font-display text-xl leading-tight font-extrabold sm:text-2xl">{site.stats.courses}</span>
 				<span class="text-xs font-semibold">courses</span>
 			</div>
 		</div>
 	</div>
+</section>
+
+<!-- HIRING PARTNERS -->
+<section class="border-b border-line bg-white py-5" aria-labelledby="partners-heading">
+	<p id="partners-heading" class="text-center text-xs font-bold tracking-widest text-muted uppercase">Our graduates work at</p>
+	<PartnerMarquee />
 </section>
 
 <!-- ALL COURSES -->
@@ -107,10 +148,33 @@
 
 	<div class="mt-10 text-center">
 		{#if shown < filtered.length}
-			<button type="button" class="min-h-12 rounded-full border-2 border-leaf px-8 py-3 font-display text-base font-bold text-leaf-dark transition-colors duration-200 hover:bg-leaf hover:text-white" onclick={() => (shown += 6)}>Other Course</button>
+			<button type="button" class="min-h-12 rounded-full border-2 border-leaf px-8 py-3 font-display text-base font-bold text-leaf-dark transition-colors duration-200 hover:bg-leaf hover:text-white" onclick={() => (shown += 6)}>Load More Courses</button>
 		{:else}
 			<a href="/courses" class="inline-block min-h-12 rounded-full border-2 border-leaf px-8 py-3 font-display text-base font-bold text-leaf-dark transition-colors duration-200 hover:bg-leaf hover:text-white">View All Courses</a>
 		{/if}
+	</div>
+</section>
+
+<!-- UPCOMING BATCHES -->
+<section class="mx-auto max-w-7xl px-4 pb-14 sm:pb-20" aria-labelledby="batches-heading">
+	<div class="rounded-3xl border border-line bg-white p-6 shadow-sm sm:p-8" use:reveal>
+		<div class="flex flex-wrap items-end justify-between gap-4">
+			<div>
+				<p class="flex items-center gap-2 text-sm font-bold tracking-wide text-leaf-dark uppercase"><CalendarClock size={16} aria-hidden="true" /> Starting soon</p>
+				<h2 id="batches-heading" class="mt-2 font-display text-2xl font-extrabold text-ink sm:text-3xl">Upcoming batches — book your seat</h2>
+			</div>
+			<a href="/batches" class="min-h-11 rounded-full border-2 border-leaf px-5 py-2.5 text-sm font-bold text-leaf-dark hover:bg-leaf hover:text-white">Full Timetable</a>
+		</div>
+		<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+			{#each nextBatches as c}
+				<a href="/admissions?course={c.id}" class="block rounded-2xl bg-mint p-5 transition-colors duration-200 hover:bg-mint-deep">
+					<p class="text-sm font-bold text-leaf-dark">{c.nextBatch.date}</p>
+					<p class="mt-1 font-display text-base leading-snug font-bold text-ink">{c.title.split('—')[0].trim()}</p>
+					<p class="mt-2 text-sm text-muted">{c.nextBatch.days} · {c.nextBatch.time}</p>
+					<p class="mt-1 text-sm font-bold text-ink">{c.nextBatch.seats} seats left</p>
+				</a>
+			{/each}
+		</div>
 	</div>
 </section>
 
@@ -125,7 +189,7 @@
 				{ icon: Briefcase, title: 'Placement support', text: 'Resume workshops, mock interviews and drives with partner employers in Pune & Mumbai.' },
 				{ icon: Users, title: 'Small batches, real faculty', text: 'Max 25 students per batch, taught by working professionals — never recorded-only.' }
 			] as item}
-				<div class="reveal rounded-2xl border border-line bg-white p-6">
+				<div use:reveal class="rounded-2xl border border-line bg-white p-6">
 					<span class="flex h-12 w-12 items-center justify-center rounded-xl bg-mint text-leaf-dark" aria-hidden="true"><item.icon size={24} /></span>
 					<h3 class="mt-4 font-display text-lg font-bold">{item.title}</h3>
 					<p class="mt-2 text-sm leading-relaxed text-muted">{item.text}</p>
@@ -159,13 +223,15 @@
 	</div>
 	<div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 		{#each instructors.slice(0, 4) as t}
-			<article class="rounded-2xl border border-line bg-white p-5 text-center shadow-sm">
-				{#if t.image}
-					<Picture name={t.image} alt="Portrait of {t.name}" width={400} height={400} sizes="200px" imgClass="mx-auto h-28 w-28 rounded-full object-cover" />
-				{:else}
-					<span class="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-mint font-display text-3xl font-extrabold text-leaf-dark" aria-hidden="true">{t.name.charAt(0)}</span>
-				{/if}
-				<h3 class="mt-4 font-display text-lg font-bold">{t.name}</h3>
+			<article class="rounded-2xl border border-line bg-white p-5 text-center shadow-sm" use:reveal>
+				<a href="/instructors/{t.slug}" aria-label="About {t.name}">
+					{#if t.image}
+						<Picture name={t.image} alt="Portrait of {t.name}" width={400} height={400} sizes="200px" imgClass="mx-auto h-28 w-28 rounded-full object-cover" />
+					{:else}
+						<span class="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-mint font-display text-3xl font-extrabold text-leaf-dark" aria-hidden="true">{t.name.charAt(0)}</span>
+					{/if}
+				</a>
+				<h3 class="mt-4 font-display text-lg font-bold"><a href="/instructors/{t.slug}" class="hover:text-leaf-dark hover:underline">{t.name}</a></h3>
 				<p class="text-sm font-semibold text-leaf-dark">{t.role}</p>
 				<p class="mt-2 text-sm text-muted">{t.exp} experience · {t.students.toLocaleString('en-IN')}+ students</p>
 			</article>
@@ -176,32 +242,58 @@
 <!-- TESTIMONIALS -->
 <section class="bg-mint/60">
 	<div class="mx-auto max-w-7xl px-4 py-14 sm:py-20">
-		<h2 class="text-center font-display text-3xl font-extrabold text-ink sm:text-4xl">What our students say</h2>
-		<div class="mt-10 grid gap-6 md:grid-cols-2">
-			{#each testimonials as t}
-				<figure class="rounded-2xl border border-line bg-white p-6 shadow-sm">
-					<div class="flex gap-0.5" aria-label="Rated {t.rating} out of 5">
-						{#each Array(t.rating) as _}<Star size={17} class="fill-gold text-gold" aria-hidden="true" />{/each}
-					</div>
-					<blockquote class="mt-3 leading-relaxed text-ink">“{t.text}”</blockquote>
-					<figcaption class="mt-4 text-sm font-bold text-ink">{t.name} <span class="font-medium text-muted">— {t.course}</span></figcaption>
-				</figure>
+		<div class="flex flex-wrap items-end justify-between gap-4">
+			<h2 class="font-display text-3xl font-extrabold text-ink sm:text-4xl">What our students say</h2>
+			<div class="flex gap-2">
+				<button type="button" class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white hover:bg-mint" aria-label="Previous testimonial" onclick={() => emblaApi?.scrollPrev()}><ChevronLeft size={20} aria-hidden="true" /></button>
+				<button type="button" class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white hover:bg-mint" aria-label="Next testimonial" onclick={() => emblaApi?.scrollNext()}><ChevronRight size={20} aria-hidden="true" /></button>
+			</div>
+		</div>
+		<div class="mt-10 overflow-hidden" use:emblaCarouselSvelte={{ options: { loop: true }, plugins: [] }} onemblaInit={onEmblaInit}>
+			<div class="flex">
+				{#each testimonials as t}
+					<figure class="mr-6 flex h-full min-w-0 flex-[0_0_100%] flex-col rounded-2xl border border-line bg-white p-6 shadow-sm md:flex-[0_0_50%]">
+						<div class="flex gap-0.5" aria-label="Rated {t.rating} out of 5">
+							{#each Array(t.rating) as _}<Star size={17} class="fill-gold text-gold" aria-hidden="true" />{/each}
+						</div>
+						<blockquote class="mt-3 leading-relaxed text-ink">“{t.text}”</blockquote>
+						<figcaption class="mt-4 text-sm font-bold text-ink">{t.name} <span class="font-medium text-muted">— {t.course}</span></figcaption>
+					</figure>
+				{/each}
+			</div>
+		</div>
+		<div class="mt-6 flex justify-center gap-2" role="tablist" aria-label="Testimonial slides">
+			{#each testimonials as _, i}
+				<button type="button" role="tab" aria-selected={selected === i} aria-label="Go to testimonial {i + 1}" class="h-2.5 rounded-full transition-all duration-200 {selected === i ? 'w-8 bg-leaf' : 'w-2.5 bg-line'}" onclick={() => emblaApi?.scrollTo(i)}></button>
 			{/each}
 		</div>
+		<p class="mt-6 text-center"><a href="/alumni" class="font-bold text-leaf-dark hover:underline">Read full alumni success stories →</a></p>
+	</div>
+</section>
+
+<!-- FINDER CTA -->
+<section class="mx-auto max-w-7xl px-4 py-14 sm:py-20">
+	<div class="flex flex-col items-start gap-6 rounded-3xl bg-leaf-deep px-6 py-10 text-white sm:px-10 lg:flex-row lg:items-center lg:justify-between" use:reveal>
+		<div>
+			<p class="flex items-center gap-2 text-sm font-bold tracking-wide text-mint-deep uppercase"><Compass size={16} aria-hidden="true" /> Not sure where to start?</p>
+			<h2 class="mt-2 max-w-xl font-display text-3xl leading-tight font-extrabold sm:text-4xl">Find your course in 2 minutes</h2>
+			<p class="mt-3 max-w-xl leading-relaxed text-white/85">Answer three quick questions about your goal and background — we will recommend the right course, batch and fee plan. No sign-up needed.</p>
+		</div>
+		<a href="/finder" class="min-h-12 shrink-0 rounded-full bg-white px-8 py-3.5 font-display text-base font-bold text-leaf-deep transition-colors duration-200 hover:bg-mint">Take the Course Finder</a>
 	</div>
 </section>
 
 <!-- BECOME AN INSTRUCTOR -->
-<section class="mx-auto max-w-7xl px-4 py-14 sm:py-20">
-	<div class="flex flex-col items-start gap-6 rounded-3xl bg-mint px-6 py-10 sm:px-10 lg:flex-row lg:items-center lg:justify-between">
+<section class="mx-auto max-w-7xl px-4 pb-14 sm:pb-20">
+	<div class="flex flex-col items-start gap-6 rounded-3xl bg-mint px-6 py-10 sm:px-10 lg:flex-row lg:items-center lg:justify-between" use:reveal>
 		<div>
 			<p class="text-sm font-bold tracking-wide text-leaf-dark uppercase">Become an instructor</p>
 			<h2 class="mt-2 max-w-xl font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">
-				You can join with EduLe <span class="text-leaf-dark underline decoration-leaf decoration-4 underline-offset-8">as an instructor?</span>
+				Join EduLe <span class="text-leaf-dark underline decoration-leaf decoration-4 underline-offset-8">as an instructor</span>
 			</h2>
 			<p class="mt-3 max-w-xl leading-relaxed text-muted">Working professionals who love teaching — share your craft with thousands of students, in classroom or live online, on your schedule.</p>
 		</div>
-		<a href="/contact" class="min-h-12 shrink-0 rounded-full bg-leaf px-8 py-3.5 font-display text-base font-bold text-white transition-colors duration-200 hover:bg-leaf-dark">Drop Information</a>
+		<a href="/contact" class="min-h-12 shrink-0 rounded-full bg-leaf px-8 py-3.5 font-display text-base font-bold text-white transition-colors duration-200 hover:bg-leaf-dark">Apply to Teach</a>
 	</div>
 </section>
 
@@ -212,8 +304,8 @@
 		<a href="/blog" class="min-h-11 rounded-full border-2 border-leaf px-5 py-2.5 text-sm font-bold text-leaf-dark hover:bg-leaf hover:text-white">All Articles</a>
 	</div>
 	<div class="mt-8 grid gap-6 md:grid-cols-3">
-		{#each blogPosts as post}
-			<article class="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
+		{#each blogPosts.slice(0, 3) as post}
+			<article class="overflow-hidden rounded-2xl border border-line bg-white shadow-sm" use:reveal>
 				<a href="/blog/{post.slug}" aria-label={post.title}>
 					<Picture name={post.image} alt={post.title} width={800} height={500} sizes="(max-width: 768px) 100vw, 33vw" imgClass="aspect-[8/5] w-full object-cover" />
 				</a>

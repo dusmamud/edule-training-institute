@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { BadgePercent, CalendarClock, Check, Wallet } from '@lucide/svelte';
 	import PageHero from '#lib/components/PageHero.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 	import { courses, inr } from '#lib/data/site.ts';
 
 	function instalments(price: number): number[] {
@@ -10,18 +11,19 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Fees — EduLe Computer Training Institute | Course Fees in ₹ &amp; Instalments</title>
-	<meta name="description" content="EduLe course fees in ₹ with instalment options and discounts. All courses 25% off. Pay in 2 instalments at no extra charge." />
-</svelte:head>
+<Seo
+	title="Fees — EduLe Computer Training Institute | Course Fees in ₹ & Instalments"
+	description="EduLe course fees in ₹ with instalment options and discounts. Up to 30% off all courses. Pay in 2 instalments at no extra charge, or on no-cost EMI."
+	image="classroom"
+/>
 
-<PageHero eyebrow="Fees" title="Clear fees. No hidden charges." text="Every fee below is the full course fee — study material, recordings, certificate and placement support included. 25% enrolment discount already applied." />
+<PageHero eyebrow="Fees" title="Clear fees. No hidden charges." text="Every fee below is the full course fee — study material, recordings, certificate and placement support included. Up to 30% enrolment discount already applied." />
 
 <div class="mx-auto max-w-7xl px-4 py-10 sm:py-14">
 	<div class="grid gap-6 md:grid-cols-3">
 		<div class="rounded-2xl border border-line bg-mint p-6">
 			<BadgePercent size={26} class="text-leaf-dark" aria-hidden="true" />
-			<h2 class="mt-3 font-display text-lg font-bold">25% off all courses</h2>
+			<h2 class="mt-3 font-display text-lg font-bold">Up to 30% off all courses</h2>
 			<p class="mt-2 text-sm leading-relaxed text-muted">Our enrolment offer applies to every course. The price you see on each course page is the discounted price — what you see is what you pay.</p>
 		</div>
 		<div class="rounded-2xl border border-line bg-mint p-6">
@@ -32,7 +34,7 @@
 		<div class="rounded-2xl border border-line bg-mint p-6">
 			<CalendarClock size={26} class="text-leaf-dark" aria-hidden="true" />
 			<h2 class="mt-3 font-display text-lg font-bold">7-day refund window</h2>
-			<p class="mt-2 text-sm leading-relaxed text-muted">Withdraw within the first 7 days of your batch and we refund the unused portion of your fees minus a ₹1,000 processing charge. Full details on the Terms page.</p>
+			<p class="mt-2 text-sm leading-relaxed text-muted">Withdraw within the first 7 days of your batch and we refund the unused portion of your fees minus a ₹1,000 processing charge. Full details on the <a href="/refund" class="font-bold text-leaf-dark hover:underline">Refund Policy page</a>.</p>
 		</div>
 	</div>
 
@@ -74,6 +76,7 @@
 				<li class="flex gap-2"><Check size={17} class="mt-0.5 shrink-0 text-leaf-dark" aria-hidden="true" /><span><strong class="text-ink">Second course 15% off</strong> for existing EduLe students.</span></li>
 				<li class="flex gap-2"><Check size={17} class="mt-0.5 shrink-0 text-leaf-dark" aria-hidden="true" /><span><strong class="text-ink">Student &amp; group discounts</strong> — ask at the Pune campus or on WhatsApp.</span></li>
 			</ul>
+			<p class="mt-5"><a href="/emi-calculator" class="font-bold text-leaf-dark hover:underline">Calculate your monthly EMI →</a> · <a href="/scholarships" class="font-bold text-leaf-dark hover:underline">See scholarships →</a></p>
 		</div>
 		<div class="rounded-2xl bg-leaf-deep p-6 text-white">
 			<h2 class="font-display text-xl font-extrabold">Need help choosing?</h2>

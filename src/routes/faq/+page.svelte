@@ -1,12 +1,14 @@
 <script lang="ts">
 	import FaqAccordion from '#lib/components/FaqAccordion.svelte';
 	import PageHero from '#lib/components/PageHero.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 </script>
 
-<svelte:head>
-	<title>FAQ — EduLe Computer Training Institute</title>
-	<meta name="description" content="Frequently asked questions about EduLe courses, fees, certificates, batches and placements." />
-</svelte:head>
+<Seo
+	title="FAQ — EduLe Computer Training Institute"
+	description="Frequently asked questions about EduLe courses, fees, certificates, batches and placements."
+	image="classroom"
+/>
 
 <PageHero eyebrow="FAQ" title="Frequently asked questions" text="Everything students usually ask before enrolling — courses, fees, certificates, batches and placements." />
 

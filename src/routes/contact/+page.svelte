@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { CheckCircle2, Clock, Mail, MapPin, Phone } from '@lucide/svelte';
 	import PageHero from '#lib/components/PageHero.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 	import { batches, site } from '#lib/data/site.ts';
 
 	let name = $state('');
@@ -15,10 +16,11 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Contact EduLe — Computer Training Institute, Pune</title>
-	<meta name="description" content="Contact EduLe in Pune — visit the campus on MG Road, call (970) 262-1413 or send a message. We reply within one working day." />
-</svelte:head>
+<Seo
+	title="Contact EduLe — Computer Training Institute, Pune"
+	description="Contact EduLe in Pune — visit the campus on MG Road, call +91 97026 21413 or send a message. We reply within one working day."
+	image="classroom"
+/>
 
 <PageHero eyebrow="Contact" title="Talk to us — we reply within a day" text="Visit the Pune campus, call us, or send a message below. Free counselling and demo classes, no obligation." />
 

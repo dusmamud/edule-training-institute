@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Award, BadgeCheck, CheckCircle2, Search, ShieldCheck, XCircle } from '@lucide/svelte';
 	import PageHero from '#lib/components/PageHero.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 
 	let code = $state('');
 	let result = $state<'idle' | 'valid' | 'invalid'>('idle');
@@ -23,10 +24,11 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Certificates — EduLe | Verifiable Course Certificates</title>
-	<meta name="description" content="Every EduLe certificate is verifiable online with a unique code. See a sample certificate, try the demo verification, and learn what employers get." />
-</svelte:head>
+<Seo
+	title="Certificates — EduLe | Verifiable Course Certificates"
+	description="Every EduLe certificate is verifiable online with a unique code. See a sample certificate, try the demo verification, and learn what employers get."
+	image="classroom"
+/>
 
 <PageHero eyebrow="Certificates" title="A certificate employers can actually check" text="Every EduLe certificate carries a unique verification code. Employers enter it here and see the student, course, completion date and grade — in under a minute." />
 

@@ -68,6 +68,24 @@ body {
 	}
 }
 
+/* Fieldsets default to min-inline-size: min-content, which can force a
+   wide scroll-row to blow out its container at 320px — always allow shrink. */
+fieldset {
+	min-width: 0;
+}
+
+@media print {
+	header,
+	footer,
+	nav,
+	.no-print {
+		display: none !important;
+	}
+	body {
+		background: #fff;
+	}
+}
+
 /* Reveal on scroll: transform + opacity only, 300ms */
 .reveal {
 	opacity: 0;
