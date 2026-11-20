@@ -36,8 +36,14 @@
 		else if (goal === 'business') ids = ['brand-marketing', 'excel-advanced', 'tally-gst'];
 		else ids = ['finance-budget', 'ux-color-schemes', 'python-programming'];
 		if (background === 'business' && goal !== 'business') ids = ['brand-marketing', 'excel-advanced', 'finance-budget'];
-		if (time === 'low') ids = ids.filter((id) => (getCourse(id)?.weeks ?? 99) <= 8);
-		if (ids.length < 2) ids = [...ids, 'web-development', 'excel-advanced'].filter((v, i, a) => a.indexOf(v) === i).slice(0, 3);
+		// Low time (2–4 hrs/week) must only ever recommend short courses.
+		// Old fallback appended 16-week web-development — defeating the filter.
+		if (time === 'low') {
+			const short = courses.filter((c) => c.weeks <= 8).map((c) => c.id);
+			ids = ids.filter((id) => (getCourse(id)?.weeks ?? 99) <= 8);
+			for (const id of short) if (ids.length < 3 && !ids.includes(id)) ids.push(id);
+			ids = ids.slice(0, 3);
+		} else if (ids.length < 2) ids = [...ids, 'web-development', 'excel-advanced'].filter((v, i, a) => a.indexOf(v) === i).slice(0, 3);
 		return ids.slice(0, 3).map((id) => getCourse(id)).filter((c) => c !== undefined) as Course[];
 	});
 
@@ -114,6 +120,7 @@
 		<div class="mt-8">
 			<h2 class="flex items-center gap-2 font-display text-2xl font-extrabold"><Compass size={24} class="text-leaf-dark" aria-hidden="true" /> Your recommended courses</h2>
 			<p class="mt-2 text-sm text-muted">Based on your goal, background and available time. Tap any course to see its full syllabus, fees and next batch.</p>
+			{#if time === 'low'}<p class="mt-2 rounded-xl bg-mint px-4 py-3 text-sm font-bold text-leaf-dark">Showing short courses only (8 weeks or less) — these fit 2–4 hours a week.</p>{/if}
 			<div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 				{#each recommendations as course (course.id)}
 					<CourseCard {course} />

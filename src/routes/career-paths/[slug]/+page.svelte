@@ -2,6 +2,7 @@
 	import { ArrowRight, Briefcase, Check, Clock } from '@lucide/svelte';
 	import Picture from '#lib/components/Picture.svelte';
 	import Seo from '#lib/components/Seo.svelte';
+	import Breadcrumbs from '#lib/components/Breadcrumbs.svelte';
 	import { courses, getCourse, inr } from '#lib/data/site.ts';
 
 	let { data } = $props();
@@ -15,6 +16,8 @@
 	image={path.image}
 />
 
+<Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Career Paths', href: '/career-paths' }, { label: path.title }]} />
+
 <section class="bg-mint">
 	<div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:py-14 lg:grid-cols-2">
 		<div>
@@ -25,11 +28,12 @@
 				<span class="flex items-center gap-1.5"><Briefcase size={16} aria-hidden="true" /> {path.roles.join(', ')}</span>
 				<span class="flex items-center gap-1.5"><Clock size={16} aria-hidden="true" /> {path.weeks} weeks</span>
 			</p>
-			<p class="mt-3 text-sm text-muted">Typical starting salary {path.salary} <span class="text-xs">(* indicative mock figure)</span></p>
+			<p class="mt-3 text-sm text-muted">Typical starting salary {path.salary} <span class="text-xs">(* indicative mock figure)</span> · {path.weeks} weeks in total — the courses run back-to-back, so the path length is the sum of the course lengths.</p>
 			<div class="mt-6 flex flex-wrap gap-3">
-				<a href="/admissions?course={path.courses[0]}" class="min-h-12 rounded-full bg-leaf px-7 py-3.5 font-display text-base font-bold text-white hover:bg-leaf-dark">Start This Path — {inr(path.bundle)}</a>
+				<a href="/admissions?path={path.slug}" class="min-h-12 rounded-full bg-leaf px-7 py-3.5 font-display text-base font-bold text-white hover:bg-leaf-dark">Start This Path — {inr(path.bundle)}</a>
 				<a href="/demo?course={path.courses[0]}" class="min-h-12 rounded-full border-2 border-leaf-dark px-7 py-3 font-display text-base font-bold text-leaf-dark hover:bg-leaf-dark hover:text-white">Try a Free Demo</a>
 			</div>
+			<p class="mt-3 text-sm text-muted">Bundle EMI from {inr(Math.ceil(path.bundle / 6))}/month · <a href="/emi-calculator" class="font-bold text-leaf-dark hover:underline">calculate your plan</a></p>
 		</div>
 		<Picture name={path.image} alt={path.title} width={1200} height={750} eager={true} sizes="(max-width: 1024px) 100vw, 50vw" imgClass="aspect-[8/5] w-full rounded-2xl object-cover" />
 	</div>
@@ -66,6 +70,7 @@
 			<h2 class="font-display text-xl font-extrabold">Not sure this is the right path?</h2>
 			<p class="mt-2 text-sm leading-relaxed text-white/85">Take the 2-minute Course Finder, or book a free counselling session and we will map the right path for your goal and budget.</p>
 			<a href="/finder" class="mt-5 inline-block min-h-12 rounded-full bg-white px-7 py-3 font-display text-base font-bold text-leaf-deep">Take the Course Finder</a>
+			<a href="/counselling" class="mt-3 ml-3 inline-block min-h-12 rounded-full border-2 border-white px-7 py-3 font-display text-base font-bold text-white sm:mt-0">Free Counselling</a>
 			<a href="/career-paths" class="mt-3 ml-3 inline-block min-h-12 rounded-full border-2 border-white px-7 py-3 font-display text-base font-bold text-white sm:mt-0">All Career Paths</a>
 		</div>
 	</div>

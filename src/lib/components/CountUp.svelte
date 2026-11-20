@@ -1,6 +1,8 @@
 <script lang="ts">
-	// Animated count-up number that starts when scrolled into view.
-	// Respects prefers-reduced-motion (shows the final value immediately).
+	// Animated count-up number.
+	// The FINAL value renders in the static HTML (crawlers / no-JS see the real
+	// number); the animation only runs on the client, once scrolled into view.
+	// Respects prefers-reduced-motion (no animation at all).
 	let {
 		value,
 		suffix = '',
@@ -8,20 +10,18 @@
 		duration = 1400
 	}: { value: number; suffix?: string; prefix?: string; duration?: number } = $props();
 
-	let shown = $state(0);
+	let shown = $state(value);
 	let el: HTMLSpanElement | undefined = $state();
 
 	$effect(() => {
 		if (!el) return;
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			shown = value;
-			return;
-		}
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		const node = el;
 		const io = new IntersectionObserver(
 			(entries) => {
 				if (!entries[0].isIntersecting) return;
 				io.disconnect();
+				shown = 0;
 				const start = performance.now();
 				const tick = (t: number) => {
 					const p = Math.min(1, (t - start) / duration);

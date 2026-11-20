@@ -2,21 +2,21 @@
 	import { Award, BadgeCheck, CheckCircle2, Search, ShieldCheck, XCircle } from '@lucide/svelte';
 	import PageHero from '#lib/components/PageHero.svelte';
 	import Seo from '#lib/components/Seo.svelte';
+	import { certificateRecords, site } from '#lib/data/site.ts';
 
 	let code = $state('');
 	let result = $state<'idle' | 'valid' | 'invalid'>('idle');
 	let verifiedName = $state('');
+	let verifiedCode = $state('');
 
-	// Mock verification: demo codes EDULE-2026-0142 (Ananya Deshmukh, Data Science)
-	// and EDULE-2026-0087 (Rohit Patil, Tally Prime). Anything else is "not found".
+	// Mock verification: every code is unique to one person + course (P1-5 fix).
 	function verify(e: SubmitEvent) {
 		e.preventDefault();
 		const c = code.trim().toUpperCase();
-		if (c === 'EDULE-2026-0142') {
-			verifiedName = 'Ananya Deshmukh — Data Science and Machine Learning with Python, completed 12 Oct 2026, Grade A';
-			result = 'valid';
-		} else if (c === 'EDULE-2026-0087') {
-			verifiedName = 'Rohit Patil — Tally Prime with GST, completed 28 Sep 2026, Grade A';
+		const rec = certificateRecords[c];
+		if (rec) {
+			verifiedName = `${rec.name} — ${rec.course}, completed ${rec.completed}, Grade ${rec.grade}`;
+			verifiedCode = c;
 			result = 'valid';
 		} else {
 			result = 'invalid';
@@ -56,7 +56,7 @@
 
 		<div>
 			<h2 class="font-display text-2xl font-extrabold sm:text-3xl">Verify a certificate</h2>
-			<p class="mt-2 leading-relaxed text-muted">Enter the certificate number exactly as printed. Try the demo code <code class="rounded bg-mint px-2 py-0.5 font-bold text-leaf-deep">EDULE-2026-0142</code>.</p>
+			<p class="mt-2 leading-relaxed text-muted">Enter the certificate number exactly as printed. Every code is unique to one student and one course. Try the demo code <code class="rounded bg-mint px-2 py-0.5 font-bold text-leaf-deep">EDULE-2026-0142</code>.</p>
 			<form class="mt-5 flex flex-col gap-3 sm:flex-row" onsubmit={verify}>
 				<label class="sr-only" for="cert-code">Certificate number</label>
 				<input id="cert-code" bind:value={code} placeholder="e.g. EDULE-2026-0142" required class="min-h-12 flex-1 rounded-full border border-line px-5 text-base outline-none focus:border-leaf" />
@@ -67,12 +67,16 @@
 			{#if result === 'valid'}
 				<div class="mt-4 flex gap-3 rounded-2xl border border-leaf bg-mint p-5" role="status">
 					<CheckCircle2 size={24} class="shrink-0 text-leaf-dark" aria-hidden="true" />
-					<div><p class="font-bold text-leaf-deep">Certificate verified</p><p class="mt-1 text-sm text-ink">{verifiedName}</p></div>
+					<div><p class="font-bold text-leaf-deep">Certificate verified</p><p class="mt-1 text-sm text-ink">{verifiedName}</p>
+					<p class="mt-3 flex flex-wrap gap-3 text-sm">
+						<a href="https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={encodeURIComponent('EduLe Certificate')}&organizationName=EduLe&certificationUrl={encodeURIComponent(`${site.url}/certificates`)}&certificationId={verifiedCode}" target="_blank" rel="noopener" class="font-bold text-leaf-dark hover:underline">Add to LinkedIn profile →</a>
+						<a href="{site.url}/certificates" class="font-bold text-leaf-dark hover:underline">Verification link: {site.url}/certificates</a>
+					</p></div>
 				</div>
 			{:else if result === 'invalid'}
 				<div class="mt-4 flex gap-3 rounded-2xl border border-red-300 bg-red-50 p-5" role="status">
 					<XCircle size={24} class="shrink-0 text-red-700" aria-hidden="true" />
-					<div><p class="font-bold text-red-800">Certificate not found</p><p class="mt-1 text-sm text-red-900">Check the code and try again, or contact us at hello@edule.in. Demo codes: EDULE-2026-0142 and EDULE-2026-0087.</p></div>
+					<div><p class="font-bold text-red-800">Certificate not found</p><p class="mt-1 text-sm text-red-900">Check the code and try again, or contact us at hello@edule.in. Demo codes: EDULE-2026-0142, EDULE-2026-0087 and EDULE-2026-0213.</p></div>
 				</div>
 			{/if}
 

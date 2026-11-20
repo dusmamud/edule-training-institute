@@ -13,7 +13,7 @@
 
 <Seo
 	title="Fees — EduLe Computer Training Institute | Course Fees in ₹ & Instalments"
-	description="EduLe course fees in ₹ with instalment options and discounts. Up to 30% off all courses. Pay in 2 instalments at no extra charge, or on no-cost EMI."
+	description="EduLe course fees in ₹ with instalment options and discounts. Up to 30% off list prices on paid courses (plus an extra 5% off for paying in full). All fees include GST. Pay in 2 instalments at no extra charge, or on no-cost EMI."
 	image="classroom"
 />
 
@@ -23,13 +23,13 @@
 	<div class="grid gap-6 md:grid-cols-3">
 		<div class="rounded-2xl border border-line bg-mint p-6">
 			<BadgePercent size={26} class="text-leaf-dark" aria-hidden="true" />
-			<h2 class="mt-3 font-display text-lg font-bold">Up to 30% off all courses</h2>
-			<p class="mt-2 text-sm leading-relaxed text-muted">Our enrolment offer applies to every course. The price you see on each course page is the discounted price — what you see is what you pay.</p>
+			<h2 class="mt-3 font-display text-lg font-bold">Up to 30% off paid courses</h2>
+			<p class="mt-2 text-sm leading-relaxed text-muted">Our enrolment offer applies to every paid course (the Finance Series course is free). The price you see on each course page is the discounted price, GST included. Pay in full for an extra 5% off — up to 35% off the list price in total.</p>
 		</div>
 		<div class="rounded-2xl border border-line bg-mint p-6">
 			<Wallet size={26} class="text-leaf-dark" aria-hidden="true" />
 			<h2 class="mt-3 font-display text-lg font-bold">Pay in instalments</h2>
-			<p class="mt-2 text-sm leading-relaxed text-muted">Split any paid course into 2 equal instalments at no extra charge. First instalment at enrolment, second midway through the batch. UPI, cards, net banking and cash accepted.</p>
+			<p class="mt-2 text-sm leading-relaxed text-muted">Split any paid course into 2 instalments at no extra charge — the halves differ by ₹1 at most for odd-priced courses (e.g. ₹12,500 + ₹12,499). First instalment at enrolment, second midway through the batch. UPI, cards, net banking and cash accepted.</p>
 		</div>
 		<div class="rounded-2xl border border-line bg-mint p-6">
 			<CalendarClock size={26} class="text-leaf-dark" aria-hidden="true" />
@@ -65,7 +65,7 @@
 			</tbody>
 		</table>
 	</div>
-	<p class="mt-3 text-sm text-muted">Fees include GST. Study material, recordings, practice sets, certificate and placement support are included in every fee — nothing is charged separately.</p>
+	<p class="mt-3 text-sm text-muted">All fees include GST. Study material, recordings, practice sets, certificate and placement support are included in every fee — nothing is charged separately.</p>
 
 	<div class="mt-10 grid gap-6 lg:grid-cols-2">
 		<div class="rounded-2xl border border-line bg-white p-6">

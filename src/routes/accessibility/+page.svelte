@@ -17,6 +17,7 @@
 			<h2 class="font-display text-xl font-extrabold">What we do</h2>
 			<ul class="mt-3 space-y-2 text-sm leading-relaxed text-muted">
 				<li>• Text contrast of at least 4.5:1, and a visible focus ring on every interactive element.</li>
+				<li>• Auto-advancing carousels have a pause button and pause on hover or focus (WCAG 2.2.2).</li>
 				<li>• Full keyboard support: menus, filters, accordions, carousels and forms all work without a mouse.</li>
 				<li>• A “Skip to main content” link at the top of every page.</li>
 				<li>• Meaningful alt text on every image, and descriptive labels on every form field.</li>

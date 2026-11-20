@@ -62,6 +62,10 @@
 <svelte:head>
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`}
+	<noscript><style>
+		/* Reveal content is hidden by JS only; without JS it must stay visible. */
+		.reveal { opacity: 1 !important; transform: none !important; }
+	</style></noscript>
 </svelte:head>
 
 <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-leaf-deep focus:px-5 focus:py-3 focus:text-white">

@@ -17,6 +17,8 @@
 
 html {
 	scroll-behavior: smooth;
+	/* WCAG 2.4.11: sticky header must not cover the focused/anchored element. */
+	scroll-padding-top: 96px;
 }
 
 body {

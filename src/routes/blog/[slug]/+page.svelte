@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Picture from '#lib/components/Picture.svelte';
 	import Seo from '#lib/components/Seo.svelte';
+	import Breadcrumbs from '#lib/components/Breadcrumbs.svelte';
 	import { blogPosts, site } from '#lib/data/site.ts';
 
 	let { data } = $props();
@@ -30,6 +31,8 @@
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html `<script type="application/ld+json">${JSON.stringify(articleJsonLd)}</script>`}
 </svelte:head>
+
+<Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Blog', href: '/blog' }, { label: post.title }]} />
 
 <article class="mx-auto max-w-3xl px-4 py-10 sm:py-14">
 	<p class="text-sm font-bold tracking-wide text-leaf-dark uppercase">{post.category} · {post.date} · {post.read}</p>

@@ -3,15 +3,25 @@
 	import PageHero from '#lib/components/PageHero.svelte';
 	import Seo from '#lib/components/Seo.svelte';
 	import { browser } from '$app/env';
-	import { batches, courses, inr } from '#lib/data/site.ts';
+	import { batches, careerPaths, courses, getCareerPath, inr } from '#lib/data/site.ts';
 
 	let step = $state(1);
 	let courseId = $state(courses[0].id);
+	let pathSlug = $state<string | null>(null);
 
-	// Preselect a course from ?course=… — client-side only, so prerendering stays safe.
+	// Preselect a course from ?course=… or a whole career-path bundle from
+	// ?path=… — client-side only, so prerendering stays safe.
 	$effect(() => {
 		if (!browser) return;
-		const c = new URLSearchParams(window.location.search).get('course');
+		const params = new URLSearchParams(window.location.search);
+		const p = params.get('path');
+		if (p && careerPaths.some((x) => x.slug === p)) {
+			pathSlug = p;
+			const first = careerPaths.find((x) => x.slug === p)?.courses[0];
+			if (first) courseId = first;
+			return;
+		}
+		const c = params.get('course');
 		if (c && courses.some((x) => x.id === c)) courseId = c;
 	});
 	let batch = $state(batches[2].name);
@@ -22,6 +32,8 @@
 	let ref = $state('');
 
 	const course = $derived(courses.find((c) => c.id === courseId) ?? courses[0]);
+	const path = $derived(pathSlug ? getCareerPath(pathSlug) : undefined);
+	const feeLabel = $derived(path ? `${inr(path.bundle)} (bundle — ${path.courses.length} courses, save ${inr(path.fee - path.bundle)})` : course.price === 0 ? 'Free' : inr(course.price));
 
 	function next(e: SubmitEvent) {
 		e.preventDefault();
@@ -53,12 +65,25 @@
 		<div class="mt-8 rounded-2xl border border-leaf bg-mint p-8 text-center" role="status">
 			<CheckCircle2 size={44} class="mx-auto text-leaf-dark" aria-hidden="true" />
 			<h2 class="mt-4 font-display text-2xl font-extrabold">Enrolment request received!</h2>
-			<p class="mx-auto mt-3 max-w-md leading-relaxed text-muted">Thank you, {name}. Your reference number is <strong class="text-ink">{ref}</strong>. We will call {phone} within one working day to confirm your {course.title} seat in the {batch}.</p>
-			<p class="mt-3 text-sm text-muted">Fee: {course.price === 0 ? 'Free' : inr(course.price)} (or 2 instalments). Please keep your reference number safe — this is a demo form, no payment was taken.</p>
+			<p class="mx-auto mt-3 max-w-md leading-relaxed text-muted">Thank you, {name}. Your reference number is <strong class="text-ink">{ref}</strong>. We will call {phone} within one working day to confirm your {#if path}{path.title} bundle seat{:else}{course.title} seat{/if} in the {batch}.</p>
+			<p class="mt-3 text-sm text-muted">Fee: {feeLabel}{#if !path} (or 2 instalments){/if}. Please keep your reference number safe — this is a demo form, no payment was taken.</p>
 			<a href="/courses" class="mt-6 inline-block min-h-12 rounded-full bg-leaf px-8 py-3.5 font-display text-base font-bold text-white hover:bg-leaf-dark">Browse More Courses</a>
 		</div>
 	{:else if step === 1}
 		<form class="mt-8 rounded-2xl border border-line bg-white p-6 sm:p-8" onsubmit={next}>
+			{#if path}
+				<h2 class="font-display text-xl font-extrabold">Step 1 — Your career-path bundle</h2>
+				<div class="mt-5 rounded-xl bg-mint p-4 text-sm leading-relaxed text-muted">
+					<strong class="text-ink">{path.title}</strong> — {path.goal}<br />
+					{#each path.courses as id, i}
+						{@const pc = courses.find((c) => c.id === id)}
+						{#if pc}<span class="block"> {i + 1}. {pc.title} — {pc.price === 0 ? 'Free' : inr(pc.price)}</span>{/if}
+					{/each}
+					<span class="mt-2 block font-display text-xl font-extrabold text-leaf-dark">Bundle price: {inr(path.bundle)} <span class="text-sm font-medium text-muted line-through">{inr(path.fee)}</span></span>
+					<span class="block">You save {inr(path.fee - path.bundle)} versus buying separately. EMI from {inr(Math.ceil(path.bundle / 6))}/month.</span>
+				</div>
+				<p class="mt-3 text-sm text-muted">Prefer a single course instead? <a href="/admissions" class="font-bold text-leaf-dark hover:underline">Enrol for one course</a></p>
+			{:else}
 			<h2 class="font-display text-xl font-extrabold">Step 1 — Choose your course</h2>
 			<label class="mt-5 block text-sm font-bold" for="course">Course</label>
 			<select id="course" bind:value={courseId} class="mt-2 min-h-12 w-full rounded-xl border border-line bg-white px-4 text-base">
@@ -67,16 +92,17 @@
 			<div class="mt-4 rounded-xl bg-mint p-4 text-sm leading-relaxed text-muted">
 				<strong class="text-ink">{course.title}</strong><br />{course.short}<br />{course.weeks} weeks · {course.lectures} lectures · {course.mode} · Taught by {course.instructor}
 			</div>
+			{/if}
 			<button type="submit" class="mt-6 flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-leaf py-3.5 font-display text-base font-bold text-white hover:bg-leaf-dark">Continue to Batch <ArrowRight size={18} aria-hidden="true" /></button>
 		</form>
 	{:else if step === 2}
 		<form class="mt-8 rounded-2xl border border-line bg-white p-6 sm:p-8" onsubmit={next}>
 			<h2 class="font-display text-xl font-extrabold">Step 2 — Pick your batch</h2>
-			<p class="mt-2 text-sm text-muted">Course: <strong class="text-ink">{course.title}</strong></p>
+			<p class="mt-2 text-sm text-muted">{#if path}<strong class="text-ink">{path.title}</strong> bundle · first course: {course.title}{:else}Course: <strong class="text-ink">{course.title}</strong>{/if}</p>
 			<fieldset class="mt-5 min-w-0 space-y-3">
 				<legend class="sr-only">Batch</legend>
-				<label class="flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 {batch === course.nextBatch.date ? 'border-leaf bg-mint' : 'border-line'}">
-					<input type="radio" name="batch" value={course.nextBatch.date} bind:group={batch} class="h-5 w-5 accent-[#16a34a]" />
+				<label class="flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 {batch === `Next batch — ${course.nextBatch.date}` ? 'border-leaf bg-mint' : 'border-line'}">
+					<input type="radio" name="batch" value={`Next batch — ${course.nextBatch.date}`} bind:group={batch} class="h-5 w-5 accent-[#16a34a]" />
 					<span class="flex-1"><strong>Next batch — {course.nextBatch.date}</strong><span class="block text-sm text-muted">{course.nextBatch.time} · {course.nextBatch.days} · {course.nextBatch.mode} · {course.nextBatch.seats} seats left</span></span>
 				</label>
 				{#each batches as b}
@@ -94,19 +120,19 @@
 	{:else}
 		<form class="mt-8 rounded-2xl border border-line bg-white p-6 sm:p-8" onsubmit={confirm}>
 			<h2 class="font-display text-xl font-extrabold">Step 3 — Your details</h2>
-			<p class="mt-2 text-sm text-muted">{course.title} · {batch} · Fee: <strong class="text-ink">{course.price === 0 ? 'Free' : inr(course.price)}</strong></p>
+			<p class="mt-2 text-sm text-muted">{#if path}{path.title} bundle · {/if}{course.title} · {batch} · Fee: <strong class="text-ink">{feeLabel}</strong></p>
 			<div class="mt-5 space-y-4">
 				<div>
 					<label class="block text-sm font-bold" for="name">Full name</label>
-					<input id="name" bind:value={name} required minlength="2" placeholder="e.g. Priya Sharma" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+					<input id="name" bind:value={name} required minlength="2" autocomplete="name" placeholder="e.g. Priya Sharma" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 				</div>
 				<div>
 					<label class="block text-sm font-bold" for="phone">Mobile number</label>
-					<input id="phone" type="tel" bind:value={phone} required pattern={'[0-9+ -]{10,15}'} placeholder="e.g. 98765 43210" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+					<input id="phone" type="tel" bind:value={phone} required pattern={'[0-9+ -]{10,15}'} autocomplete="tel" placeholder="e.g. 98765 43210" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 				</div>
 				<div>
 					<label class="block text-sm font-bold" for="email">Email address</label>
-					<input id="email" type="email" bind:value={email} required placeholder="you@example.com" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+					<input id="email" type="email" bind:value={email} required autocomplete="email" placeholder="you@example.com" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 				</div>
 			</div>
 			<p class="mt-4 text-xs leading-relaxed text-muted">Demo form — your details are not sent anywhere. By submitting you agree to be contacted about this enrolment.</p>

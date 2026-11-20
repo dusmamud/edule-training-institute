@@ -25,38 +25,45 @@
 		<nav aria-label="Courses">
 			<h2 class="font-display text-lg font-bold">Popular Courses</h2>
 			<ul class="mt-4 space-y-2.5 text-sm text-white/80">
-				<li><a class="hover:text-white hover:underline" href="/courses/data-science-python">Data Science with Python</a></li>
-				<li><a class="hover:text-white hover:underline" href="/courses/web-development">Full-Stack Web Development</a></li>
-				<li><a class="hover:text-white hover:underline" href="/courses/tally-gst">Tally Prime with GST</a></li>
-				<li><a class="hover:text-white hover:underline" href="/courses/ux-color-schemes">UX Design</a></li>
-				<li><a class="hover:text-white hover:underline" href="/courses/excel-advanced">Advanced Excel</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/courses/data-science-python">Data Science with Python</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/courses/web-development">Full-Stack Web Development</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/courses/tally-gst">Tally Prime with GST</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/courses/ux-color-schemes">UX Design</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/courses/excel-advanced">Advanced Excel</a></li>
 			</ul>
 		</nav>
 		<nav aria-label="Institute">
 			<h2 class="font-display text-lg font-bold">Institute</h2>
 			<ul class="mt-4 space-y-2.5 text-sm text-white/80">
-				<li><a class="hover:text-white hover:underline" href="/about">About Us</a></li>
-				<li><a class="hover:text-white hover:underline" href="/instructors">Our Instructors</a></li>
-				<li><a class="hover:text-white hover:underline" href="/fees">Fees &amp; Instalments</a></li>
-				<li><a class="hover:text-white hover:underline" href="/certificates">Certificates</a></li>
-				<li><a class="hover:text-white hover:underline" href="/placements">Placements</a></li>
-				<li><a class="hover:text-white hover:underline" href="/alumni">Alumni Stories</a></li>
-				<li><a class="hover:text-white hover:underline" href="/faq">FAQ</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/about">About Us</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/instructors">Our Instructors</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/fees">Fees &amp; Instalments</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/certificates">Certificates</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/placements">Placements</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/alumni">Alumni Stories</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/faq">FAQ</a></li>
 			</ul>
 		</nav>
 		<nav aria-label="Explore">
 			<h2 class="font-display text-lg font-bold">Explore</h2>
 			<ul class="mt-4 space-y-2.5 text-sm text-white/80">
-				<li><a class="hover:text-white hover:underline" href="/demo">Free Demo Class</a></li>
-				<li><a class="hover:text-white hover:underline" href="/batches">Batch Timetable</a></li>
-				<li><a class="hover:text-white hover:underline" href="/career-paths">Career Paths</a></li>
-				<li><a class="hover:text-white hover:underline" href="/workshops">Free Workshops</a></li>
-				<li><a class="hover:text-white hover:underline" href="/scholarships">Scholarships</a></li>
-				<li><a class="hover:text-white hover:underline" href="/emi-calculator">EMI Calculator</a></li>
-				<li><a class="hover:text-white hover:underline" href="/compare">Compare Courses</a></li>
-				<li><a class="hover:text-white hover:underline" href="/corporate">Corporate Training</a></li>
-				<li><a class="hover:text-white hover:underline" href="/employers">Hire from EduLe</a></li>
-				<li><a class="hover:text-white hover:underline" href="/referral">Refer &amp; Earn</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/demo">Free Demo Class</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/gallery">Campus Gallery</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/student-work">Student Work</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/reviews">Reviews & Location</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/mentorship">1:1 Mentorship</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/counselling">Free Counselling</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/placement-report">Placement Report</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/demo-lesson">Free Demo Lesson</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/batches">Batch Timetable</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/career-paths">Career Paths</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/workshops">Free Workshops</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/scholarships">Scholarships</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/emi-calculator">EMI Calculator</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/compare">Compare Courses</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/corporate">Corporate Training</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/employers">Hire from EduLe</a></li>
+				<li><a class="inline-flex min-h-11 items-center hover:text-white hover:underline" href="/referral">Refer &amp; Earn</a></li>
 			</ul>
 		</nav>
 		<div>
@@ -72,7 +79,7 @@
 	<div class="border-t border-white/15">
 		<div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-5 text-xs text-white/70">
 			<p>© 2026 EduLe Computer Training Institute, Pune. All rights reserved. Demo site — mock data only.</p>
-			<p class="flex flex-wrap gap-4"><a href="/privacy" class="hover:text-white hover:underline">Privacy Policy</a><a href="/terms" class="hover:text-white hover:underline">Terms of Service</a><a href="/refund" class="hover:text-white hover:underline">Refund Policy</a><a href="/accessibility" class="hover:text-white hover:underline">Accessibility</a><a href="/sitemap" class="hover:text-white hover:underline">Sitemap</a></p>
+			<p class="flex flex-wrap gap-4"><a href="/privacy" class="inline-flex min-h-11 items-center hover:text-white hover:underline">Privacy Policy</a><a href="/terms" class="inline-flex min-h-11 items-center hover:text-white hover:underline">Terms of Service</a><a href="/refund" class="inline-flex min-h-11 items-center hover:text-white hover:underline">Refund Policy</a><a href="/accessibility" class="inline-flex min-h-11 items-center hover:text-white hover:underline">Accessibility</a><a href="/sitemap" class="inline-flex min-h-11 items-center hover:text-white hover:underline">Sitemap</a></p>
 		</div>
 	</div>
 </footer>

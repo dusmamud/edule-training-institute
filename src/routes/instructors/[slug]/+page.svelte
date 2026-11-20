@@ -3,6 +3,7 @@
 	import CourseCard from '#lib/components/CourseCard.svelte';
 	import Picture from '#lib/components/Picture.svelte';
 	import Seo from '#lib/components/Seo.svelte';
+	import Breadcrumbs from '#lib/components/Breadcrumbs.svelte';
 	import { courses } from '#lib/data/site.ts';
 
 	let { data } = $props();
@@ -15,6 +16,8 @@
 	description="{t.bio} {t.exp} experience, {t.students.toLocaleString('en-IN')}+ students taught. Courses by {t.name} at EduLe Pune."
 	image={t.image ?? 'classroom'}
 />
+
+<Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Instructors', href: '/instructors' }, { label: t.name }]} />
 
 <section class="bg-mint">
 	<div class="mx-auto grid max-w-7xl items-center gap-8 px-4 py-10 sm:py-14 lg:grid-cols-3">

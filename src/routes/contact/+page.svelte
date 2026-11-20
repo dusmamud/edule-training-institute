@@ -63,11 +63,11 @@
 					<div class="mt-5 grid gap-4 sm:grid-cols-2">
 						<div>
 							<label class="block text-sm font-bold" for="c-name">Full name</label>
-							<input id="c-name" bind:value={name} required minlength="2" placeholder="Your name" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+							<input id="c-name" bind:value={name} required minlength="2" autocomplete="name" placeholder="Your name" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 						</div>
 						<div>
 							<label class="block text-sm font-bold" for="c-email">Email address</label>
-							<input id="c-email" type="email" bind:value={email} required placeholder="you@example.com" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+							<input id="c-email" type="email" bind:value={email} required autocomplete="email" placeholder="you@example.com" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 						</div>
 					</div>
 					<div class="mt-4">

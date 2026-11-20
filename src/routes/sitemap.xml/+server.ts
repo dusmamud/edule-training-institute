@@ -1,8 +1,8 @@
-import { blogPosts, careerPaths, courses, instructors, site } from '#lib/data/site.ts';
+import { blogPosts, careerPaths, courses, instructors, workshops, site } from '#lib/data/site.ts';
 
 export const prerender = true;
 
-const TODAY = '2026-11-19';
+const TODAY = '2026-11-20';
 
 const staticPages = [
 	{ path: '/', priority: '1.0', changefreq: 'weekly' },
@@ -19,6 +19,13 @@ const staticPages = [
 	{ path: '/batches', priority: '0.8', changefreq: 'weekly' },
 	{ path: '/finder', priority: '0.7', changefreq: 'monthly' },
 	{ path: '/placements', priority: '0.8', changefreq: 'monthly' },
+	{ path: '/placement-report', priority: '0.7', changefreq: 'monthly' },
+	{ path: '/gallery', priority: '0.7', changefreq: 'monthly' },
+	{ path: '/student-work', priority: '0.7', changefreq: 'monthly' },
+	{ path: '/reviews', priority: '0.7', changefreq: 'monthly' },
+	{ path: '/mentorship', priority: '0.7', changefreq: 'monthly' },
+	{ path: '/counselling', priority: '0.8', changefreq: 'monthly' },
+	{ path: '/demo-lesson', priority: '0.7', changefreq: 'monthly' },
 	{ path: '/alumni', priority: '0.7', changefreq: 'monthly' },
 	{ path: '/scholarships', priority: '0.7', changefreq: 'monthly' },
 	{ path: '/referral', priority: '0.6', changefreq: 'monthly' },
@@ -47,6 +54,7 @@ export function GET() {
 		...courses.map((c) => url(`/courses/${c.id}`, 'monthly', '0.8')),
 		...courses.map((c) => url(`/courses/${c.id}/syllabus`, 'monthly', '0.5')),
 		...careerPaths.map((p) => url(`/career-paths/${p.slug}`, 'monthly', '0.7')),
+		...workshops.map((w) => url(`/workshops/${w.slug}`, 'monthly', '0.7')),
 		...instructors.map((t) => url(`/instructors/${t.slug}`, 'monthly', '0.6')),
 		...blogPosts.map((b) => url(`/blog/${b.slug}`, 'monthly', '0.7'))
 	];

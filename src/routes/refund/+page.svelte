@@ -5,7 +5,7 @@
 
 <Seo
 	title="Refund & Cancellation Policy — EduLe"
-	description="EduLe refund policy: full refund (minus ₹1,000 processing) if you withdraw within the first 7 days of your batch, free batch transfers, and what happens if we cancel a batch."
+	description="EduLe refund policy: refund of the unused portion of your fees (minus ₹1,000 processing) if you withdraw within the first 7 days of your batch, free batch transfers, and what happens if we cancel a batch."
 	image="classroom"
 />
 

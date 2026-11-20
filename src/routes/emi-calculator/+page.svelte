@@ -13,6 +13,7 @@
 	// Full payment gets an extra 5% off; instalments are interest-free.
 	const fullPrice = $derived(Math.round(fee * 0.95));
 	const instalment = $derived(Math.ceil(fee / 2));
+	const instalment2 = $derived(fee - instalment);
 	const emi = $derived(months > 0 ? Math.ceil(fee / months) : 0);
 	const saving = $derived(fee - fullPrice);
 </script>
@@ -72,8 +73,8 @@
 				<p class="mt-3 flex items-center gap-2 text-sm font-bold text-mint-deep"><Check size={17} aria-hidden="true" /> You save {inr(saving)} by paying in full</p>
 				<p class="mt-2 text-sm leading-relaxed text-white/85">One payment at enrolment. UPI, cards, net banking and cash accepted.</p>
 			{:else if plan === 'two'}
-				<p class="mt-4 font-display text-4xl font-extrabold">{inr(instalment)} <span class="text-lg font-bold text-white/70">× 2</span></p>
-				<p class="mt-1 text-sm text-white/70">Total {inr(fee)} — no extra charge</p>
+				<p class="mt-4 font-display text-4xl font-extrabold">{inr(instalment)}{#if instalment !== instalment2} <span class="text-lg font-bold text-white/70">+ {inr(instalment2)}</span>{:else} <span class="text-lg font-bold text-white/70">× 2</span>{/if}</p>
+				<p class="mt-1 text-sm text-white/70">Total {inr(fee)} — no extra charge{#if instalment !== instalment2} (halves differ by ₹1){/if}</p>
 				<p class="mt-3 text-sm leading-relaxed text-white/85">First instalment at enrolment, second midway through the batch.</p>
 			{:else}
 				<p class="mt-4 font-display text-4xl font-extrabold">{inr(emi)}<span class="text-lg font-bold text-white/70"> / month</span></p>

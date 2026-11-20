@@ -1,7 +1,9 @@
 // Reveal-on-scroll as a Svelte action.
-// Replaces the old layout $effect that only observed elements present at
-// first mount — after client-side navigation, new .reveal elements were
-// never observed and stayed invisible forever.
+// The `.reveal` class is added by JS only, so with JS disabled (or if the
+// action never runs) content stays visible — there is no no-JS blank state.
+// Safety net: a per-node timeout forces visibility even if the
+// IntersectionObserver never fires (e.g. tall elements, fast scroll, headless
+// fullPage captures). Reduced-motion users always see content immediately.
 let io: IntersectionObserver | null = null;
 
 function getObserver(): IntersectionObserver {
@@ -15,7 +17,7 @@ function getObserver(): IntersectionObserver {
 				}
 			}
 		},
-		{ threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+		{ threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
 	);
 	return io;
 }
@@ -27,8 +29,11 @@ export function reveal(node: HTMLElement) {
 	}
 	node.classList.add('reveal');
 	getObserver().observe(node);
+	// Fallback: never leave content hidden longer than 1.2s after mount.
+	const timer = window.setTimeout(() => node.classList.add('is-visible'), 1200);
 	return {
 		destroy() {
+			window.clearTimeout(timer);
 			io?.unobserve(node);
 		}
 	};

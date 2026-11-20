@@ -26,6 +26,7 @@
 				<div class="rounded-2xl bg-mint p-4"><dt class="sr-only">Placed</dt><dd class="font-display text-2xl font-extrabold text-leaf-dark">{site.stats.placed.toLocaleString('en-IN')}+</dd><dd class="text-xs font-semibold text-muted">placed in jobs</dd></div>
 				<div class="rounded-2xl bg-mint p-4"><dt class="sr-only">Instructors</dt><dd class="font-display text-2xl font-extrabold text-leaf-dark">{site.stats.instructors}</dd><dd class="text-xs font-semibold text-muted">instructors</dd></div>
 			</dl>
+			<p class="mt-3 text-xs text-muted">28,400+ unique students trained; {site.stats.enrolments.toLocaleString('en-IN')} total course enrolments — one student often takes more than one course.</p>
 		</div>
 	</div>
 
@@ -38,7 +39,7 @@
 	<div class="mt-14 grid items-center gap-8 lg:grid-cols-2">
 		<div>
 			<h2 class="font-display text-2xl font-extrabold sm:text-3xl">Visit the campus</h2>
-			<p class="mt-3 leading-relaxed text-muted">Drop in for a free counselling session or a demo class — weekdays 9:00 am to 7:00 pm IST, or book a slot on the Contact page.</p>
+			<p class="mt-3 leading-relaxed text-muted">Drop in for a free counselling session or a demo class — weekdays 9:00 am to 7:00 pm IST. <a href="/counselling" class="font-bold text-leaf-dark hover:underline">Book a free counselling slot →</a> or <a href="/gallery" class="font-bold text-leaf-dark hover:underline">see the campus gallery →</a></p>
 			<p class="mt-4 flex items-start gap-2 font-semibold"><MapPin size={20} class="mt-0.5 shrink-0 text-leaf-dark" aria-hidden="true" />{site.address}</p>
 			<p class="mt-2 text-muted">{site.hours}</p>
 			<a href="/contact" class="mt-5 inline-block min-h-12 rounded-full bg-leaf px-7 py-3 font-display text-base font-bold text-white hover:bg-leaf-dark">Get Directions &amp; Contact</a>

@@ -1,0 +1,32 @@
+WEBVTT
+
+00:00.000 --> 00:01.500
+Namaste, and welcome to EduLe. I am Meera Iyer,
+
+00:01.500 --> 00:04.000
+and in the next twenty minutes you will write
+your first real Python program — no experience needed.
+
+00:04.000 --> 00:08.000
+First, we open the editor and print our first line.
+Python reads almost like English: print, brackets,
+and your words in quotes.
+
+00:08.000 --> 00:13.000
+Next, variables. Think of a variable as a labelled
+box: we store a name, a number, or a list of expenses,
+and Python remembers it for us.
+
+00:13.000 --> 00:17.000
+Now the useful part: we take a messy list of monthly
+expenses and ask Python to add them up, find the
+biggest one, and show the total in rupees.
+
+00:17.000 --> 00:19.000
+We add one condition — if the total crosses your
+budget, Python warns you. That is the whole idea
+of programming: rules that do the boring work for you.
+
+00:19.000 --> 00:20.000
+Finally, we save the script and run it again
+with different numbers. Change the data, keep the program.

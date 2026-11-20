@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PageHero from '#lib/components/PageHero.svelte';
 	import Seo from '#lib/components/Seo.svelte';
-	import { blogPosts, careerPaths, courses, instructors } from '#lib/data/site.ts';
+	import { blogPosts, careerPaths, courses, instructors, workshops } from '#lib/data/site.ts';
 
 	const groups = [
 		{ title: 'Main pages', links: [
@@ -15,6 +15,13 @@
 			{ href: '/about', label: 'About EduLe' },
 			{ href: '/instructors', label: 'Instructors' },
 			{ href: '/placements', label: 'Placements' },
+			{ href: '/placement-report', label: 'Placement Report (mock-labelled)' },
+			{ href: '/gallery', label: 'Campus Gallery' },
+			{ href: '/student-work', label: 'Student Work' },
+			{ href: '/reviews', label: 'Reviews & Location' },
+			{ href: '/mentorship', label: '1:1 Mentorship' },
+			{ href: '/counselling', label: 'Free Counselling' },
+			{ href: '/demo-lesson', label: 'Free Demo Lesson' },
 			{ href: '/alumni', label: 'Alumni Stories' },
 			{ href: '/blog', label: 'Blog' },
 			{ href: '/faq', label: 'FAQ' },
@@ -43,6 +50,8 @@
 			{ href: '/accessibility', label: 'Accessibility' }
 		] },
 		{ title: 'Courses', links: courses.map((c) => ({ href: `/courses/${c.id}`, label: c.title })) },
+		{ title: 'Course syllabuses', links: courses.map((c) => ({ href: `/courses/${c.id}/syllabus`, label: `${c.title.split('—')[0].trim()} — Syllabus` })) },
+		{ title: 'Workshops', links: [{ href: '/workshops', label: 'All Free Workshops' }, ...workshops.map((w) => ({ href: `/workshops/${w.slug}`, label: w.title }))] },
 		{ title: 'Career paths', links: careerPaths.map((p) => ({ href: `/career-paths/${p.slug}`, label: p.title })) },
 		{ title: 'Instructors', links: instructors.map((t) => ({ href: `/instructors/${t.slug}`, label: t.name })) },
 		{ title: 'Blog', links: blogPosts.map((b) => ({ href: `/blog/${b.slug}`, label: b.title })) }

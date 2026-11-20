@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowRight, Award, BookOpen, Briefcase, CalendarClock, ChevronLeft, ChevronRight, Clock, Compass, GraduationCap, Search, Star, Users } from '@lucide/svelte';
+		import { ArrowRight, Award, BookOpen, Briefcase, CalendarClock, ChevronLeft, ChevronRight, Clock, Compass, GraduationCap, Pause, Play, Search, Star, Users } from '@lucide/svelte';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import type { EmblaCarouselType } from 'embla-carousel';
 	import gsap from 'gsap';
@@ -36,15 +36,18 @@
 		return () => ctx.revert();
 	});
 
-	// Testimonial carousel (Embla)
+	// Testimonial carousel (Embla) — auto-advance with a pause control
+	// (WCAG 2.2.2) and pause on hover/focus.
 	let emblaApi: EmblaCarouselType | undefined = $state();
 	let selected = $state(0);
+	let paused = $state(false);
+	let hoverPaused = $state(false);
 	function onEmblaInit(e: CustomEvent<EmblaCarouselType>) {
 		emblaApi = e.detail;
 		emblaApi.on('select', () => (selected = emblaApi?.selectedScrollSnap() ?? 0));
 	}
 	$effect(() => {
-		if (!emblaApi || prefersReducedMotion()) return;
+		if (!emblaApi || prefersReducedMotion() || paused || hoverPaused) return;
 		const id = window.setInterval(() => emblaApi?.scrollNext(), 6000);
 		return () => window.clearInterval(id);
 	});
@@ -77,6 +80,7 @@
 				<div><dt class="sr-only">Courses</dt><dd class="font-display text-xl font-extrabold text-ink"><CountUp value={site.stats.courses} /></dd><dd class="text-muted">job-ready courses</dd></div>
 				<div><dt class="sr-only">Placed students</dt><dd class="font-display text-xl font-extrabold text-ink"><CountUp value={site.stats.placed} suffix="+" /></dd><dd class="text-muted">placed in jobs</dd></div>
 			</dl>
+			<p class="hero-anim mt-3 text-xs text-muted">28,400+ unique students trained · {site.stats.enrolments.toLocaleString('en-IN')} total course enrolments across all courses.</p>
 		</div>
 		<div class="hero-anim relative mx-auto w-full max-w-lg">
 			<div class="absolute top-2 left-2 flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md" aria-label="Rated 4.8 out of 5">
@@ -187,7 +191,7 @@
 				{ icon: GraduationCap, title: 'Learn by doing', text: 'Every course ends with real projects — not just theory. Your portfolio is your proof.' },
 				{ icon: Award, title: 'Verifiable certificates', text: 'Every certificate carries a code employers can check online in under a minute.' },
 				{ icon: Briefcase, title: 'Placement support', text: 'Resume workshops, mock interviews and drives with partner employers in Pune & Mumbai.' },
-				{ icon: Users, title: 'Small batches, real faculty', text: 'Max 25 students per batch, taught by working professionals — never recorded-only.' }
+				{ icon: Users, title: 'Small batches, real faculty', text: `Max ${site.batchCapacity} students per batch, taught by working professionals — never recorded-only.` }
 			] as item}
 				<div use:reveal class="rounded-2xl border border-line bg-white p-6">
 					<span class="flex h-12 w-12 items-center justify-center rounded-xl bg-mint text-leaf-dark" aria-hidden="true"><item.icon size={24} /></span>
@@ -245,11 +249,12 @@
 		<div class="flex flex-wrap items-end justify-between gap-4">
 			<h2 class="font-display text-3xl font-extrabold text-ink sm:text-4xl">What our students say</h2>
 			<div class="flex gap-2">
+				<button type="button" class="flex h-11 min-w-11 items-center justify-center gap-1.5 rounded-full border border-line bg-white px-3 text-sm font-bold hover:bg-mint" aria-label={paused ? 'Resume testimonial auto-play' : 'Pause testimonial auto-play'} aria-pressed={paused} onclick={() => (paused = !paused)}>{#if paused}<Play size={18} aria-hidden="true" /> Resume{:else}<Pause size={18} aria-hidden="true" /> Pause{/if}</button>
 				<button type="button" class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white hover:bg-mint" aria-label="Previous testimonial" onclick={() => emblaApi?.scrollPrev()}><ChevronLeft size={20} aria-hidden="true" /></button>
 				<button type="button" class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white hover:bg-mint" aria-label="Next testimonial" onclick={() => emblaApi?.scrollNext()}><ChevronRight size={20} aria-hidden="true" /></button>
 			</div>
 		</div>
-		<div class="mt-10 overflow-hidden" use:emblaCarouselSvelte={{ options: { loop: true }, plugins: [] }} onemblaInit={onEmblaInit}>
+		<div class="mt-10 overflow-hidden" use:emblaCarouselSvelte={{ options: { loop: true }, plugins: [] }} onemblaInit={onEmblaInit} onmouseenter={() => (hoverPaused = true)} onmouseleave={() => (hoverPaused = false)} onfocusin={() => (hoverPaused = true)} onfocusout={() => (hoverPaused = false)}>
 			<div class="flex">
 				{#each testimonials as t}
 					<figure class="mr-6 flex h-full min-w-0 flex-[0_0_100%] flex-col rounded-2xl border border-line bg-white p-6 shadow-sm md:flex-[0_0_50%]">
@@ -264,10 +269,30 @@
 		</div>
 		<div class="mt-6 flex justify-center gap-2" role="tablist" aria-label="Testimonial slides">
 			{#each testimonials as _, i}
-				<button type="button" role="tab" aria-selected={selected === i} aria-label="Go to testimonial {i + 1}" class="h-2.5 rounded-full transition-all duration-200 {selected === i ? 'w-8 bg-leaf' : 'w-2.5 bg-line'}" onclick={() => emblaApi?.scrollTo(i)}></button>
+				<button type="button" role="tab" aria-selected={selected === i} aria-label="Go to testimonial {i + 1}" class="flex min-h-11 min-w-11 items-center justify-center" onclick={() => emblaApi?.scrollTo(i)}><span class="block h-2.5 rounded-full transition-all duration-200 {selected === i ? 'w-8 bg-leaf' : 'w-2.5 bg-line'}" aria-hidden="true"></span></button>
 			{/each}
 		</div>
-		<p class="mt-6 text-center"><a href="/alumni" class="font-bold text-leaf-dark hover:underline">Read full alumni success stories →</a></p>
+		<p class="mt-6 text-center"><a href="/alumni" class="font-bold text-leaf-dark hover:underline">Read full alumni success stories →</a> · <a href="/reviews" class="font-bold text-leaf-dark hover:underline">Read reviews & find us on Google →</a></p>
+	</div>
+</section>
+
+<!-- CAMPUS & STUDENT WORK -->
+<section class="mx-auto max-w-7xl px-4 pb-14 sm:pb-20">
+	<div class="grid gap-6 md:grid-cols-2">
+		<a href="/gallery" class="group overflow-hidden rounded-3xl border border-line bg-white shadow-sm" use:reveal>
+			<Picture name="classroom" alt="Students learning at computers in a bright EduLe classroom in Pune" width={1200} height={750} sizes="(max-width: 768px) 100vw, 50vw" imgClass="aspect-[8/5] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+			<span class="block p-6">
+				<span class="font-display text-2xl font-extrabold text-ink group-hover:text-leaf-dark">See the campus</span>
+				<span class="mt-2 block text-sm leading-relaxed text-muted">Classrooms, labs, workshops and graduation day — a look inside the Pune campus. →</span>
+			</span>
+		</a>
+		<a href="/student-work" class="group overflow-hidden rounded-3xl border border-line bg-white shadow-sm" use:reveal>
+			<Picture name="course-web-dev" alt="Developer writing website code on a laptop" width={1200} height={750} sizes="(max-width: 768px) 100vw, 50vw" imgClass="aspect-[8/5] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+			<span class="block p-6">
+				<span class="font-display text-2xl font-extrabold text-ink group-hover:text-leaf-dark">What students build</span>
+				<span class="mt-2 block text-sm leading-relaxed text-muted">Real projects from real courses — websites, dashboards, audits and campaigns. →</span>
+			</span>
+		</a>
 	</div>
 </section>
 

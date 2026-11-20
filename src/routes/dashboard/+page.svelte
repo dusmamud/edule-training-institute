@@ -14,13 +14,18 @@
 	];
 
 	let user = $state<{ name: string; email: string } | null>(null);
-	let enrolled = $state<Enrolled[]>(demoEnrolled);
+	// Signed-out visitors see NO personal enrolments, instalments or
+	// certificates (P2-8 fix) — the demo data only appears after sign-in.
+	let enrolled = $state<Enrolled[]>([]);
 
 	$effect(() => {
 		if (!browser) return;
 		try {
 			const raw = localStorage.getItem('edule-user');
-			if (raw) user = JSON.parse(raw);
+			if (raw) {
+				user = JSON.parse(raw);
+				enrolled = demoEnrolled;
+			}
 		} catch {
 			/* ignore */
 		}
@@ -49,19 +54,25 @@
 <PageHero eyebrow="My Learning" title="Welcome back{user ? `, ${user.name.split(' ')[0]}` : ''}" text={user ? `Signed in as ${user.email} — here is where your learning stands.` : 'This is a demo dashboard with sample enrolments. Sign in to see your own courses.'} />
 
 <div class="mx-auto max-w-7xl px-4 py-10 sm:py-14">
+	{#if user}
 	<div class="flex flex-wrap items-center justify-between gap-4">
 		<div class="grid grid-cols-3 gap-4">
 			<div class="rounded-2xl bg-mint p-4 text-center"><p class="font-display text-2xl font-extrabold text-leaf-dark">{enrolled.length}</p><p class="text-xs font-semibold text-muted">courses enrolled</p></div>
 			<div class="rounded-2xl bg-mint p-4 text-center"><p class="font-display text-2xl font-extrabold text-leaf-dark">{totalProgress}%</p><p class="text-xs font-semibold text-muted">average progress</p></div>
 			<div class="rounded-2xl bg-mint p-4 text-center"><p class="font-display text-2xl font-extrabold text-leaf-dark">1</p><p class="text-xs font-semibold text-muted">certificate earned</p></div>
 		</div>
-		{#if user}
 			<button type="button" class="flex min-h-12 items-center gap-2 rounded-full border-2 border-leaf px-6 py-3 font-display text-base font-bold text-leaf-dark hover:bg-leaf hover:text-white" onclick={logout}><LogOut size={18} aria-hidden="true" /> Sign Out</button>
-		{:else}
-			<a href="/login" class="min-h-12 rounded-full bg-leaf px-7 py-3 font-display text-base font-bold text-white hover:bg-leaf-dark">Sign In</a>
-		{/if}
 	</div>
+	{:else}
+	<div class="rounded-2xl border border-leaf bg-mint p-8 text-center">
+		<h2 class="font-display text-2xl font-extrabold">Sign in to see your courses</h2>
+		<p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">Your enrolled courses, progress, next lessons and certificates appear here after you sign in. This is a demo dashboard — try it with the demo account.</p>
+		<a href="/login" class="mt-5 inline-block min-h-12 rounded-full bg-leaf px-8 py-3.5 font-display text-base font-bold text-white hover:bg-leaf-dark">Sign In</a>
+		<p class="mt-3 text-sm text-muted">Demo: demo@edule.in / demo1234</p>
+	</div>
+	{/if}
 
+	{#if user}
 	<h2 class="mt-10 font-display text-2xl font-extrabold sm:text-3xl">Continue learning</h2>
 	<div class="mt-6 grid gap-6 md:grid-cols-2">
 		{#each enrolled as e}
@@ -88,7 +99,7 @@
 		<div class="rounded-2xl border border-line bg-white p-6">
 			<h2 class="flex items-center gap-2 font-display text-xl font-extrabold"><Award size={22} class="text-leaf-dark" aria-hidden="true" /> My certificates</h2>
 			<ul class="mt-4 space-y-3 text-sm">
-				<li class="flex items-center justify-between gap-3 rounded-xl bg-mint px-4 py-3"><span><strong>Finance Series: Budget &amp; Net Worth</strong><span class="block text-xs text-muted">Completed · Code EDULE-2026-0087</span></span><a href="/certificates" class="font-bold whitespace-nowrap text-leaf-dark hover:underline">Verify →</a></li>
+				<li class="flex items-center justify-between gap-3 rounded-xl bg-mint px-4 py-3"><span><strong>Finance Series: Budget &amp; Net Worth</strong><span class="block text-xs text-muted">Completed · Code EDULE-2026-0213</span></span><a href="/certificates" class="font-bold whitespace-nowrap text-leaf-dark hover:underline">Verify →</a></li>
 				<li class="rounded-xl border border-line px-4 py-3 text-muted">Data Science with Python — in progress (62%). Certificate unlocks at 100% + final assessment.</li>
 				<li class="rounded-xl border border-line px-4 py-3 text-muted">Full-Stack Web Development — in progress (34%).</li>
 			</ul>
@@ -112,4 +123,5 @@
 			<a href="/demo" class="min-h-12 rounded-full border-2 border-leaf px-6 py-3 font-display text-base font-bold text-leaf-dark hover:bg-leaf hover:text-white">Free Demo Class</a>
 		</div>
 	</div>
+	{/if}
 </div>

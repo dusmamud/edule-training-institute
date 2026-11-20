@@ -17,11 +17,17 @@ export const site = {
 	address: '2nd Floor, Sunrise Plaza, MG Road, Pune, Maharashtra 411001',
 	hours: 'Mon–Sat, 9:00 am – 7:00 pm IST',
 	whatsappHref: 'https://wa.me/919702621413',
+	mapsUrl: 'https://www.google.com/maps/search/EduLe+Computer+Training+Institute,+MG+Road,+Pune',
+	mapsEmbed: 'https://www.google.com/maps?q=EduLe+Computer+Training+Institute,+MG+Road,+Pune&output=embed',
+	gbpUrl: 'https://www.google.com/maps/search/EduLe+Computer+Training+Institute,+MG+Road,+Pune',
+	justdialUrl: 'https://www.justdial.com/Pune/EduLe-Computer-Training-Institute',
+	sulekhaUrl: 'https://www.sulekha.com/edule-computer-training-institute-pune',
+	batchCapacity: 25,
 	instagram: 'https://www.instagram.com/edule.in',
 	facebook: 'https://www.facebook.com/edule.in',
 	twitter: 'https://x.com/edule_in',
 	youtube: 'https://www.youtube.com/@edule-in',
-	stats: { courses: 13, students: 28400, rating: 4.8, ratingCount: '9.8K', instructors: 6, placed: 18200 }
+	stats: { courses: 13, students: 28400, enrolments: 39990, rating: 4.8, ratingCount: '9.8K', instructors: 6, placed: 18200 }
 };
 
 export type Course = {
@@ -504,7 +510,9 @@ export const placements = [
 	{ company: 'WebKraft Studio', role: 'Frontend Developer', students: 142 },
 	{ company: 'RetailKart India', role: 'Digital Marketing Executive', students: 128 },
 	{ company: 'CloudNine IT', role: 'Cloud Support Associate', students: 96 },
-	{ company: 'DesignNest Agency', role: 'UI Designer', students: 88 }
+	{ company: 'DesignNest Agency', role: 'UI Designer', students: 88 },
+	{ company: 'BrightAccounts LLP', role: 'Accounts Executive', students: 74 },
+	{ company: 'DataBridge Analytics', role: 'Junior Data Analyst', students: 61 }
 ];
 
 export const blogPosts = [
@@ -524,7 +532,7 @@ export const faqs = [
 	{ q: 'What if I miss a class?', a: 'All live sessions are recorded and shared the same day, and every batch has a weekly doubt-clearing slot. You can also repeat a missed module with the next batch free of charge.' },
 	{ q: 'Do you help with jobs and placements?', a: 'Yes. We run resume workshops, mock interviews and placement drives with partner employers in Pune and Mumbai. Placement support is free for all certificate-course students — see the Placements page.' },
 	{ q: 'Is there a refund policy?', a: 'Yes. If you withdraw within the first 7 days of your batch, we refund the unused portion of your fees minus a ₹1,000 processing charge. See the Terms page for full details.' },
-	{ q: 'What is the discount on the homepage?', a: 'All courses are currently up to 30% off the listed fee as our enrolment offer. The discounted price is the one shown on each course — what you see is what you pay.' },
+	{ q: 'What is the discount on the homepage?', a: 'All paid courses are currently up to 30% off the listed fee as our enrolment offer (the Finance Series course is free). Pay in full for an extra 5% off — up to 35% off the list price in total. The discounted price shown on each course is the price before that extra full-pay discount, and all fees include GST.' },
 	{ q: 'Can I attend a free demo class before enrolling?', a: 'Yes. Every course offers a free 60-minute demo class — online or in our Pune classroom. Pick a date and slot on the Free Demo page and we confirm on WhatsApp within a few hours.' },
 	{ q: 'Do you offer scholarships?', a: 'Yes. We offer a merit scholarship of up to ₹10,000, a 15% Women in Tech discount on Development and Data Science courses, and a 10% early-bird discount. See the Scholarships page for eligibility.' }
 ];
@@ -543,17 +551,17 @@ export type CareerPath = {
 };
 
 export const careerPaths: CareerPath[] = [
-	{ slug: 'data-analyst', title: 'Become a Data Analyst', goal: 'From zero to job-ready analyst: spreadsheets, Python and real ML projects.', courses: ['python-programming', 'excel-advanced', 'data-science-python'], weeks: 24, fee: 54497, bundle: 49999, roles: ['Data Analyst', 'MIS Executive', 'Business Analyst'], salary: '₹3.5–6 LPA*', image: 'course-data-science' },
-	{ slug: 'full-stack-developer', title: 'Become a Full-Stack Developer', goal: 'Build and deploy real websites, then run them on the cloud.', courses: ['web-development', 'python-programming', 'cloud-computing-aws'], weeks: 26, fee: 58997, bundle: 54999, roles: ['Frontend Developer', 'Full-Stack Developer', 'Web Developer'], salary: '₹4–8 LPA*', image: 'course-web-dev' },
+	{ slug: 'data-analyst', title: 'Become a Data Analyst', goal: 'From zero to job-ready analyst: spreadsheets, Python and real ML projects.', courses: ['python-programming', 'excel-advanced', 'data-science-python'], weeks: 27, fee: 54498, bundle: 49999, roles: ['Data Analyst', 'MIS Executive', 'Business Analyst'], salary: '₹3.5–6 LPA*', image: 'course-data-science' },
+	{ slug: 'full-stack-developer', title: 'Become a Full-Stack Developer', goal: 'Build and deploy real websites, then run them on the cloud.', courses: ['web-development', 'python-programming', 'cloud-computing-aws'], weeks: 36, fee: 58997, bundle: 54999, roles: ['Frontend Developer', 'Full-Stack Developer', 'Web Developer'], salary: '₹4–8 LPA*', image: 'course-web-dev' },
 	{ slug: 'ui-ux-designer', title: 'Become a UI/UX Designer', goal: 'Colour, layout and Figma — a portfolio that wins freelance and full-time work.', courses: ['ux-color-schemes', 'graphic-design-badges'], weeks: 14, fee: 53500, bundle: 49999, roles: ['UI Designer', 'Visual Designer', 'Graphic Designer'], salary: '₹3–5.5 LPA*', image: 'course-uiux' },
 	{ slug: 'accountant', title: 'Become an Accountant', goal: 'Tally, GST and Excel — the exact combo CA firms and small businesses hire for.', courses: ['tally-gst', 'excel-advanced', 'finance-budget'], weeks: 17, fee: 15498, bundle: 13999, roles: ['Accounts Executive', 'GST Assistant', 'Billing Executive'], salary: '₹2.5–4.5 LPA*', image: 'course-tally' }
 ];
 
 export const workshops = [
-	{ slug: 'build-first-website', title: 'Free Workshop: Build Your First Website in 2 Hours', date: 'Sat, 21 Nov 2026', time: '11:00 am – 1:00 pm', mode: 'Classroom + Live Online', trainer: 'Meera Iyer', image: 'workshop-seminar', seats: 40, desc: 'No experience needed. Leave with a live one-page website you built yourself — and a clear idea of what a web career looks like.' },
-	{ slug: 'ai-tools-office-work', title: 'AI Tools for Office Work', date: 'Sat, 28 Nov 2026', time: '11:00 am – 12:30 pm', mode: 'Live Online', trainer: 'Rahul Sharma', image: 'course-ai', seats: 100, desc: 'The free AI tools that genuinely save time at work — drafting, spreadsheets, summaries — and how to check their output.' },
-	{ slug: 'tally-gst-live-return', title: 'Tally + GST: File a Return Live', date: 'Sun, 29 Nov 2026', time: '10:00 am – 12:00 pm', mode: 'Classroom, Pune', trainer: 'Arjun Mehta', image: 'course-tally', seats: 30, desc: 'Watch a full GST return filed step by step on a mock company, then try it yourself with faculty beside you.' },
-	{ slug: 'design-logo-figma', title: 'Design a Logo in Figma', date: 'Sat, 5 Dec 2026', time: '11:00 am – 1:00 pm', mode: 'Live Online', trainer: 'Sana Kapoor', image: 'course-uiux', seats: 60, desc: 'From a blank canvas to a finished logo using grids and geometry — a perfect first taste of graphic design.' }
+	{ slug: 'build-first-website', title: 'Free Workshop: Build Your First Website in 2 Hours', date: 'Sat, 21 Nov 2026', time: '11:00 am – 1:00 pm', startDate: '2026-11-21T11:00:00+05:30', endDate: '2026-11-21T13:00:00+05:30', mode: 'Classroom + Live Online', trainer: 'Meera Iyer', image: 'workshop-seminar', seats: 40, desc: 'No experience needed. Leave with a live one-page website you built yourself — and a clear idea of what a web career looks like.', agenda: ['Welcome & setup — get your tools ready (15 min)', 'HTML basics: structure a real page (30 min)', 'CSS: colours, layout & making it look good (30 min)', 'Publish your site live & open Q&A (45 min)'] },
+	{ slug: 'ai-tools-office-work', title: 'AI Tools for Office Work', date: 'Sat, 28 Nov 2026', time: '11:00 am – 12:30 pm', startDate: '2026-11-28T11:00:00+05:30', endDate: '2026-11-28T12:30:00+05:30', mode: 'Live Online', trainer: 'Rahul Sharma', image: 'course-ai', seats: 100, desc: 'The free AI tools that genuinely save time at work — drafting, spreadsheets, summaries — and how to check their output.', agenda: ['The 10 free AI tools worth your time (20 min)', 'Drafting emails & documents with AI (25 min)', 'Spreadsheets & summaries, hands-on (25 min)', 'Spotting AI mistakes & Q&A (20 min)'] },
+	{ slug: 'tally-gst-live-return', title: 'Tally + GST: File a Return Live', date: 'Sun, 29 Nov 2026', time: '10:00 am – 12:00 pm', startDate: '2026-11-29T10:00:00+05:30', endDate: '2026-11-29T12:00:00+05:30', mode: 'Classroom, Pune', trainer: 'Arjun Mehta', image: 'course-tally', seats: 30, desc: 'Watch a full GST return filed step by step on a mock company, then try it yourself with faculty beside you.', agenda: ['The mock company & its books (15 min)', 'GSTR-1, filed step by step (35 min)', 'GSTR-3B & payment, live (35 min)', 'Try it yourself with faculty beside you (35 min)'] },
+	{ slug: 'design-logo-figma', title: 'Design a Logo in Figma', date: 'Sat, 5 Dec 2026', time: '11:00 am – 1:00 pm', startDate: '2026-12-05T11:00:00+05:30', endDate: '2026-12-05T13:00:00+05:30', mode: 'Live Online', trainer: 'Sana Kapoor', image: 'course-uiux', seats: 60, desc: 'From a blank canvas to a finished logo using grids and geometry — a perfect first taste of graphic design.', agenda: ['What makes a logo work (15 min)', 'Grids & geometry in Figma (40 min)', 'Build your logo, step by step (40 min)', 'Share, critique & export (25 min)'] }
 ];
 
 export const alumni = [
@@ -573,6 +581,68 @@ export const scholarships = [
 	{ name: 'Early Bird', amount: '10% off', desc: 'Enrol at least 2 weeks before your batch starts and save an extra 10% on the fee.', eligibility: 'All courses; combines with the enrolment offer.' },
 	{ name: 'Refer & Earn', amount: '₹1,000 off each', desc: 'Refer a friend — when they enrol, you both get ₹1,000 off your next course.', eligibility: 'Current and past students; no limit on referrals.' }
 ];
+
+export const gallery = [
+	{ image: 'classroom', alt: 'Bright EduLe classroom with students at desktop computers', caption: 'Morning batch in the Pune classroom', category: 'Classroom' },
+	{ image: 'lab-students', alt: 'Students collaborating around a laptop in an EduLe computer lab', caption: 'Lab session — students debugging together', category: 'Lab' },
+	{ image: 'workshop-seminar', alt: 'Free weekend workshop with a full room of learners', caption: 'Free weekend workshop, full house', category: 'Events' },
+	{ image: 'corporate-training', alt: 'Corporate training session for a Pune business team', caption: 'Corporate training for a local business team', category: 'Events' },
+	{ image: 'instructor-teaching', alt: 'Instructor explaining a business strategy on a large screen to adult students', caption: 'Faculty teaching a business strategy session', category: 'Classroom' },
+	{ image: 'alumni-graduate', alt: 'EduLe graduate holding a certificate', caption: 'Graduation day — certificate in hand', category: 'Events' },
+	{ image: 'course-web-dev', alt: 'Developer writing website code on a laptop', caption: 'Web development batch — capstone week', category: 'Lab' },
+	{ image: 'course-data-science', alt: 'Data analyst working with charts and dashboards', caption: 'Data science batch — dashboard project', category: 'Lab' },
+	{ image: 'course-uiux', alt: 'Designer sketching mobile app wireframes and colour swatches', caption: 'UI/UX studio — colour & Figma session', category: 'Classroom' }
+];
+
+export const studentWork = [
+	{ student: 'Ananya Deshmukh', course: 'data-science-python', courseTitle: 'Data Science with Python', title: 'Pune House-Price Predictor', desc: 'An ML model trained on Pune property listings that predicts prices from area, bedrooms and amenities — with a live dashboard.', tools: ['Python', 'pandas', 'scikit-learn', 'Plotly'], outcome: 'Shown in 4 job interviews; shortlisted for a data analyst role', image: 'course-data-science' },
+	{ student: 'Amit Verma', course: 'web-development', courseTitle: 'Full-Stack Web Development', title: 'Kirana Store Website', desc: 'A complete website for a neighbourhood grocery store in Pune — catalogue, WhatsApp ordering and UPI payment links.', tools: ['HTML', 'CSS', 'JavaScript', 'Netlify'], outcome: 'Live site used by a real local business', image: 'course-web-dev' },
+	{ student: 'Kavya Reddy', course: 'ux-color-schemes', courseTitle: 'UX Colour Schemes', title: 'Banking App Redesign', desc: 'A full recolour and re-layout of a banking app screen, with an accessible palette that passes WCAG 2.2 AA contrast.', tools: ['Figma', 'Stark', 'Adobe Color'], outcome: 'Won freelance work from a Pune fintech startup', image: 'course-uiux' },
+	{ student: 'Rohit Patil', course: 'tally-gst', courseTitle: 'Tally Prime with GST', title: 'Mock-Company Books, One Full Month', desc: 'A complete month of accounts for a mock trading firm — vouchers, ledgers, inventory, GSTR-1 and GSTR-3B, all filed in Tally.', tools: ['Tally Prime', 'GST Portal', 'Excel'], outcome: 'Hired by a CA firm within a month of finishing', image: 'course-tally' },
+	{ student: 'Sneha Kulkarni', course: 'brand-marketing', courseTitle: 'Brand Marketing', title: '30-Day Instagram Campaign', desc: 'A month-long content plan for a home food business — reels, WhatsApp broadcast and a Google Business profile.', tools: ['Canva', 'Meta Business Suite', 'WhatsApp Business'], outcome: 'Doubled the business’s Instagram enquiries', image: 'course-digital-marketing' },
+	{ student: 'Imran Shaikh', course: 'cyber-security', courseTitle: 'Cyber Security Fundamentals', title: 'Authorised Security Audit', desc: 'A full audit of a demo site in the EduLe security lab — findings report, severity ratings and fixes, presented to faculty.', tools: ['Linux', 'Nmap', 'Burp Suite'], outcome: 'Presented at the EduLe demo day; cited in interviews', image: 'course-cyber-security' },
+	{ student: 'Karan Joshi', course: 'ai-ml-foundations', courseTitle: 'AI & ML Foundations', title: 'Shop Assistant Chatbot', desc: 'A small AI chatbot that answers product and price questions for a Pune electronics shop, built on a public LLM API.', tools: ['Python', 'ChatGPT', 'Streamlit'], outcome: 'Demoed to the shop owner; now answering real customer queries', image: 'course-ai' },
+	{ student: 'Meera Joshi', course: 'excel-advanced', courseTitle: 'Advanced Excel', title: 'Management Dashboard', desc: 'A sales dashboard with PivotTables, slicers and charts that a manager can read in 30 seconds — built on real office data.', tools: ['Excel', 'Power Query', 'Power BI'], outcome: 'Adopted by the student’s office team', image: 'course-excel' }
+];
+
+export const mentors = [
+	{ slug: 'meera-iyer', name: 'Meera Iyer', focus: 'Web development & AI — portfolio reviews, capstone feedback, interview prep', topics: ['Portfolio review', 'Capstone feedback', 'Interview prep'], price: 499 },
+	{ slug: 'rahul-sharma', name: 'Rahul Sharma', focus: 'Data science & cloud — project debugging, career roadmap, AWS labs', topics: ['Project debugging', 'Career roadmap', 'AWS labs'], price: 499 },
+	{ slug: 'sana-kapoor', name: 'Sana Kapoor', focus: 'Design — portfolio critique, Figma feedback, freelance pricing', topics: ['Portfolio critique', 'Figma feedback', 'Freelance pricing'], price: 499 },
+	{ slug: 'arjun-mehta', name: 'Arjun Mehta', focus: 'Accounting & business — Tally practice, GST doubts, business plans', topics: ['Tally practice', 'GST doubts', 'Business plans'], price: 499 },
+	{ slug: 'vikram-singh', name: 'Vikram Singh', focus: 'Cyber security — lab walkthroughs, audit reports, CTF coaching', topics: ['Lab walkthrough', 'Audit reports', 'CTF coaching'], price: 499 }
+];
+
+export const placementReport = [
+	{ batch: 'Nov 2026 — Data Science', students: 42, placed: 31, topRoles: 'Junior Data Analyst, MIS Executive', avgPackage: '₹4.1 LPA' },
+	{ batch: 'Nov 2026 — Web Development', students: 38, placed: 29, topRoles: 'Frontend Developer, Web Developer', avgPackage: '₹4.3 LPA' },
+	{ batch: 'Oct 2026 — Tally + GST', students: 45, placed: 36, topRoles: 'Accounts Executive, GST Assistant', avgPackage: '₹3.0 LPA' },
+	{ batch: 'Oct 2026 — UI/UX Design', students: 28, placed: 19, topRoles: 'UI Designer, Graphic Designer', avgPackage: '₹4.6 LPA' },
+	{ batch: 'Sep 2026 — Digital Marketing', students: 33, placed: 24, topRoles: 'Digital Marketing Executive, Social Media Manager', avgPackage: '₹3.4 LPA' },
+	{ batch: 'Sep 2026 — Cloud with AWS', students: 26, placed: 18, topRoles: 'Cloud Support Associate, DevOps Trainee', avgPackage: '₹4.0 LPA' }
+];
+
+export const certificateRecords: Record<string, { name: string; course: string; completed: string; grade: string }> = {
+	'EDULE-2026-0142': { name: 'Ananya Deshmukh', course: 'Data Science and Machine Learning with Python', completed: '12 Oct 2026', grade: 'A' },
+	'EDULE-2026-0087': { name: 'Rohit Patil', course: 'Tally Prime with GST', completed: '28 Sep 2026', grade: 'A' },
+	'EDULE-2026-0213': { name: 'Demo Student', course: 'Finance Series: Budget & Net Worth', completed: '30 Oct 2026', grade: 'A' }
+};
+
+export const demoLesson = {
+	title: 'Free Demo Lesson: Your First Python Script in 20 Minutes',
+	poster: 'course-python',
+	duration: 'PT20M',
+	description: 'A free 20-minute demo lesson from the Python Programming course: write your first real script, automate a boring task, and see how EduLe teaches. Taught by Meera Iyer.',
+	transcript: [
+		{ t: '0:00', text: 'Namaste, and welcome to EduLe. I am Meera Iyer, and in the next twenty minutes you will write your first real Python program — no experience needed.' },
+		{ t: '1:30', text: 'First, we open the editor and print our first line. Python reads almost like English: print, brackets, and your words in quotes.' },
+		{ t: '4:00', text: 'Next, variables. Think of a variable as a labelled box: we store a name, a number, or a list of expenses, and Python remembers it for us.' },
+		{ t: '8:00', text: 'Now the useful part: we take a messy list of monthly expenses and ask Python to add them up, find the biggest one, and show the total in rupees.' },
+		{ t: '13:00', text: 'We add one condition — if the total crosses your budget, Python warns you. That is the whole idea of programming: rules that do the boring work for you.' },
+		{ t: '17:00', text: 'Finally, we save the script and run it again with different numbers. Change the data, keep the program — that is automation.' },
+		{ t: '19:00', text: 'That is your first script. In the full course we build three portfolio projects like this, with a teacher beside you. Book a free demo class to try a live lesson.' }
+	]
+};
 
 export function instructorSlug(name: string): string | null {
 	return instructors.find((t) => t.name === name)?.slug ?? null;

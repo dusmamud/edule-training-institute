@@ -67,16 +67,16 @@
 			{#if mode === 'signup'}
 				<div>
 					<label class="block text-sm font-bold" for="name">Full name</label>
-					<input id="name" bind:value={name} required minlength="2" placeholder="e.g. Priya Sharma" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+					<input id="name" bind:value={name} required minlength="2" autocomplete="name" placeholder="e.g. Priya Sharma" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 				</div>
 			{/if}
 			<div>
 				<label class="block text-sm font-bold" for="email">Email address</label>
-				<input id="email" type="email" bind:value={email} required placeholder="you@example.com" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+				<input id="email" type="email" bind:value={email} required autocomplete="email" placeholder="you@example.com" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 			</div>
 			<div>
 				<label class="block text-sm font-bold" for="password">Password</label>
-				<input id="password" type="password" bind:value={password} required minlength="6" placeholder="At least 6 characters" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+				<input id="password" type="password" bind:value={password} required minlength="6" autocomplete="current-password" placeholder="At least 6 characters" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 			</div>
 			{#if error}
 				<p class="rounded-xl bg-red-50 px-4 py-3 text-sm font-bold text-red-700" role="alert">{error}</p>

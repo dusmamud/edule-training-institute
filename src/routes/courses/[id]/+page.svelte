@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { Award, BookOpen, CalendarClock, Check, ChevronDown, Clock, Download, Star, Users } from '@lucide/svelte';
+	import { Award, BookOpen, CalendarClock, Check, ChevronDown, Clock, Download, MessageCircle, Star, Users } from '@lucide/svelte';
 	import Picture from '#lib/components/Picture.svelte';
 	import CourseCard from '#lib/components/CourseCard.svelte';
 	import Seo from '#lib/components/Seo.svelte';
-	import { courses, inr, site } from '#lib/data/site.ts';
+	import Breadcrumbs from '#lib/components/Breadcrumbs.svelte';
+	import { courses, inr, site, studentWork } from '#lib/data/site.ts';
 
 	let { data } = $props();
 	const course = $derived(data.course);
@@ -12,6 +13,9 @@
 	const related = $derived(courses.filter((c) => c.category === course.category && c.id !== course.id).slice(0, 3));
 	const shownRelated = $derived(related.length ? related : courses.filter((c) => c.id !== course.id).slice(0, 3));
 	const instalments = $derived(course.price === 0 ? [] : [Math.ceil(course.price / 2), course.price - Math.ceil(course.price / 2)]);
+	const emiFrom = $derived(course.price === 0 ? 0 : Math.ceil(course.price / 6));
+	const courseWork = $derived(studentWork.filter((w) => w.course === course.id));
+	const waText = $derived(encodeURIComponent(`Hi EduLe! I have a question about the ${course.title} course (${inr(course.price)}).`));
 
 	const courseJsonLd = $derived({
 		'@context': 'https://schema.org',
@@ -35,6 +39,8 @@
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html `<script type="application/ld+json">${JSON.stringify(courseJsonLd)}</script>`}
 </svelte:head>
+
+<Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'All Courses', href: '/courses' }, { label: course.title }]} />
 
 <section class="bg-mint">
 	<div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:py-14 lg:grid-cols-5">
@@ -69,11 +75,12 @@
 						{#if course.oldPrice}<span class="ml-2 text-lg font-medium text-muted line-through">{inr(course.oldPrice)}</span>{/if}
 					</p>
 					{#if course.price > 0}
-						<p class="mt-1 text-sm text-muted">or 2 instalments of {inr(instalments[0])} — no extra charge. Enrolment offer applied.</p>
+						<p class="mt-1 text-sm text-muted">or 2 instalments of {inr(instalments[0])}{#if instalments[1] !== instalments[0]} + {inr(instalments[1])}{/if} — no extra charge. EMI from {inr(emiFrom)}/month · <a href="/emi-calculator" class="font-bold text-leaf-dark hover:underline">calculate</a>. All fees include GST. Enrolment offer applied.</p>
 					{/if}
 					<a href="/admissions?course={course.id}" class="mt-5 block min-h-12 rounded-full bg-leaf py-3.5 text-center font-display text-base font-bold text-white transition-colors duration-200 hover:bg-leaf-dark">Enrol Now</a>
 					<a href="/demo?course={course.id}" class="mt-3 block min-h-12 rounded-full border-2 border-leaf py-3 text-center font-display text-base font-bold text-leaf-dark transition-colors duration-200 hover:bg-leaf hover:text-white">Book a Free Demo Class</a>
-					<a href="/courses/{course.id}/syllabus" class="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-line py-3 text-center font-display text-base font-bold text-ink transition-colors duration-200 hover:border-leaf hover:text-leaf-dark"><Download size={18} aria-hidden="true" /> Download Syllabus (PDF)</a>
+					<a href="/courses/{course.id}/syllabus" class="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-line py-3 text-center font-display text-base font-bold text-ink transition-colors duration-200 hover:border-leaf hover:text-leaf-dark"><Download size={18} aria-hidden="true" /> View Printable Syllabus</a>
+					<a href="https://wa.me/919702621413?text={waText}" target="_blank" rel="noopener" class="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-line py-3 text-center font-display text-base font-bold text-ink transition-colors duration-200 hover:border-leaf hover:text-leaf-dark"><MessageCircle size={18} aria-hidden="true" /> Ask About This Course on WhatsApp</a>
 					<a href="/fees" class="mt-3 block text-center text-sm font-semibold text-leaf-dark hover:underline">See Full Fee Details</a>
 					<ul class="mt-5 space-y-2 text-sm text-muted">
 						<li class="flex gap-2"><Check size={17} class="shrink-0 text-leaf-dark" aria-hidden="true" /> {course.mode}</li>
@@ -129,6 +136,22 @@
 					<li class="flex items-center gap-2 rounded-xl border border-line bg-white p-4 text-sm font-bold"><Check size={18} class="shrink-0 text-leaf-dark" aria-hidden="true" />{job}</li>
 				{/each}
 			</ul>
+
+			{#if courseWork.length > 0}
+				<h2 class="mt-10 font-display text-2xl font-extrabold sm:text-3xl">What you’ll build</h2>
+				<p class="mt-2 text-sm text-muted">Real student projects from this course — this is the portfolio you graduate with.</p>
+				<div class="mt-5 grid gap-4 sm:grid-cols-2">
+					{#each courseWork as w}
+						<article class="rounded-2xl border border-line bg-white p-5">
+							<h3 class="font-display text-lg font-bold">{w.title}</h3>
+							<p class="mt-1 text-sm leading-relaxed text-muted">{w.desc}</p>
+							<p class="mt-3 text-sm"><strong>Built by {w.student}</strong> · {w.tools.join(', ')}</p>
+							<p class="mt-1 text-sm font-semibold text-leaf-dark">{w.outcome}</p>
+						</article>
+					{/each}
+				</div>
+				<p class="mt-4 text-sm"><a href="/student-work" class="font-bold text-leaf-dark hover:underline">See all student work →</a></p>
+			{/if}
 
 			<h2 class="mt-10 font-display text-2xl font-extrabold sm:text-3xl">What students say</h2>
 			<p class="mt-2 text-sm text-muted">Reviews from past students of this course (shown as text — we never mark up our own reviews for search stars).</p>
@@ -186,3 +209,11 @@
 		{/each}
 	</div>
 </div>
+
+<!-- Sticky enrol bar on mobile: price + Enrol / Demo while scrolling (sits above the global Call/WhatsApp/Enrol bar). -->
+<div class="fixed inset-x-0 bottom-14 z-40 flex items-center gap-3 border-t border-line bg-white/95 px-4 py-2.5 backdrop-blur lg:hidden">
+	<p class="min-w-0 flex-1 font-display text-lg leading-tight font-extrabold text-leaf-dark">{course.price === 0 ? 'Free' : inr(course.price)}{#if course.price > 0}<span class="block text-xs font-semibold text-muted">EMI from {inr(emiFrom)}/mo</span>{/if}</p>
+	<a href="/demo?course={course.id}" class="min-h-11 shrink-0 rounded-full border-2 border-leaf px-5 py-2.5 text-sm font-bold text-leaf-dark">Free Demo</a>
+	<a href="/admissions?course={course.id}" class="min-h-11 shrink-0 rounded-full bg-leaf px-5 py-2.5 text-sm font-bold text-white">Enrol Now</a>
+</div>
+<div class="h-16 lg:hidden" aria-hidden="true"></div>
