@@ -254,7 +254,7 @@
 				<button type="button" class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white hover:bg-mint" aria-label="Next testimonial" onclick={() => emblaApi?.scrollNext()}><ChevronRight size={20} aria-hidden="true" /></button>
 			</div>
 		</div>
-		<div class="mt-10 overflow-hidden" use:emblaCarouselSvelte={{ options: { loop: true }, plugins: [] }} onemblaInit={onEmblaInit} onmouseenter={() => (hoverPaused = true)} onmouseleave={() => (hoverPaused = false)} onfocusin={() => (hoverPaused = true)} onfocusout={() => (hoverPaused = false)}>
+		<div class="mt-10 overflow-hidden" role="region" aria-label="Student testimonials" use:emblaCarouselSvelte={{ options: { loop: true }, plugins: [] }} onemblaInit={onEmblaInit} onmouseenter={() => (hoverPaused = true)} onmouseleave={() => (hoverPaused = false)} onfocusin={() => (hoverPaused = true)} onfocusout={() => (hoverPaused = false)}>
 			<div class="flex">
 				{#each testimonials as t}
 					<figure class="mr-6 flex h-full min-w-0 flex-[0_0_100%] flex-col rounded-2xl border border-line bg-white p-6 shadow-sm md:flex-[0_0_50%]">

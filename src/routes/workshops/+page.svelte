@@ -90,7 +90,7 @@
 							<div class="grid gap-3 sm:grid-cols-2">
 								<div>
 									<label class="block text-sm font-bold" for="ws-phone-{w.slug}">Mobile number</label>
-									<input id="ws-phone-{w.slug}" type="tel" bind:value={phone} required pattern={'[0-9+ -]{10,15}'} autocomplete="tel" placeholder="98765 43210" class="mt-1 min-h-12 w-full rounded-xl border border-line bg-white px-4 text-base outline-none focus:border-leaf" />
+									<input id="ws-phone-{w.slug}" type="tel" bind:value={phone} required pattern="[0-9+\- ]{10,15}" autocomplete="tel" placeholder="98765 43210" class="mt-1 min-h-12 w-full rounded-xl border border-line bg-white px-4 text-base outline-none focus:border-leaf" />
 								</div>
 								<div>
 									<label class="block text-sm font-bold" for="ws-email-{w.slug}">Email address</label>

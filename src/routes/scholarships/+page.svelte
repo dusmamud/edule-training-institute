@@ -59,7 +59,7 @@
 					</div>
 					<div>
 						<label class="block text-sm font-bold" for="phone">Mobile number</label>
-						<input id="phone" type="tel" bind:value={phone} required pattern={'[0-9+ -]{10,15}'} autocomplete="tel" placeholder="e.g. 98765 43210" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
+						<input id="phone" type="tel" bind:value={phone} required pattern="[0-9+\- ]{10,15}" autocomplete="tel" placeholder="e.g. 98765 43210" class="mt-2 min-h-12 w-full rounded-xl border border-line px-4 text-base outline-none focus:border-leaf" />
 					</div>
 				</div>
 				<button type="submit" class="mt-6 min-h-12 w-full rounded-full bg-leaf py-3.5 font-display text-base font-bold text-white hover:bg-leaf-dark">Apply for Scholarship</button>

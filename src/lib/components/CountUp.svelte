@@ -10,6 +10,8 @@
 		duration = 1400
 	}: { value: number; suffix?: string; prefix?: string; duration?: number } = $props();
 
+	// svelte-ignore state_referenced_locally — `value` is a static prop;
+	// `shown` intentionally starts at the final value so SSR renders it.
 	let shown = $state(value);
 	let el: HTMLSpanElement | undefined = $state();
 

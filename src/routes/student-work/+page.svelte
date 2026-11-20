@@ -22,7 +22,7 @@
 <div class="mx-auto max-w-7xl px-4 py-10 sm:py-14">
 	<div class="flex flex-wrap items-center gap-3">
 		<label class="text-sm font-bold" for="course-filter">Show work from:</label>
-		<select id="course-filter" bind:value={filter} class="min-h-12 rounded-xl border border-line bg-white px-4 text-base">
+		<select id="course-filter" bind:value={filter} class="min-h-12 w-full min-w-0 rounded-xl border border-line bg-white px-4 text-base sm:w-auto">
 			<option value="all">All courses</option>
 			{#each courses as c}<option value={c.id}>{c.title.split('—')[0].trim()}</option>{/each}
 		</select>
